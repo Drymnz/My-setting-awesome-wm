@@ -1,7 +1,7 @@
 -- IMPORTACIONES O REQUERIMIENTOS DE LA EJECUCION
 -- documentacion (https://awesomewm.org/apidoc/index.html)
 pcall(require, "luarocks.loader")
--- colores para modiicar
+-- colores para modificar
 require("color")
 require("awful.autofocus")
 -- Habilite el widget de ayuda de teclas rápidas para VIM y otras aplicaciones
@@ -11,8 +11,8 @@ require("awful.hotkeys_popup.keys")
 require("bar")
 -- importar para cargar lo comandos de tecla global
 require("keys")
--- fondo de pantalla , colocar /home/{tu usario} por $HOME
-url_wallpaper = "$HOME/.config/awesome/wallpaper/Ruka Sarashina.jpg"
+-- NOTA COLOCAR LA RUTA DEL LA IMAGEN /home/{usario}/.config/awesome/wallpaper/Ruka Sarashina.jpg"
+url_wallpaper = "/home/drymnz/.config/awesome/wallpaper/Ruka Sarashina.jpg"
 -- Biblioteca impresionante estándar del entorno
 local gears = require("gears")
 local awful = require("awful")
@@ -24,6 +24,8 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
+-- opacidad 
+--local opacity = require("lib/awesome-opacity")
 
 -- {{{ Manejo de errores
 -- Compruebe si Awesome encontró un error durante el inicio y volvió a
@@ -73,8 +75,7 @@ modkey = "Mod4"
 awful.layout.layouts =
     { -- puede agregar mas si lo desea, mas informacion (https://awesomewm.org/apidoc/libraries/awful.layout.html)
     awful.layout.suit.floating, -- ventana flotable
-    awful.layout.suit.tile.bottom,-- uno grande arriba y apilar abajo
-     awful.layout.suit.fair, -- awful.layout.suit.spiral,-- forma de un caracol
+    awful.layout.suit.fair, -- awful.layout.suit.spiral,-- forma de un caracol
     awful.layout.suit.corner.nw--uno grande a la iquierda y apilo al rededor
     }
 -- }}}
@@ -111,19 +112,25 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Crear un wibox para cada pantalla y agregarlo
-local taglist_buttons = gears.table.join(awful.button({}, 1, function(t)
+local taglist_buttons = gears.table.join(
+    awful.button({}, 1, function(t)
     t:view_only()
-end), awful.button({modkey}, 1, function(t)
+end), 
+    awful.button({modkey}, 1, function(t)
     if client.focus then
         client.focus:move_to_tag(t)
     end
-end), awful.button({}, 3, awful.tag.viewtoggle), awful.button({modkey}, 3, function(t)
+end), 
+    awful.button({}, 3, awful.tag.viewtoggle),
+    awful.button({modkey}, 3, function(t)
     if client.focus then
         client.focus:toggle_tag(t)
     end
-end), awful.button({}, 4, function(t)
+end),
+    awful.button({}, 4, function(t)
     awful.tag.viewnext(t.screen)
-end), awful.button({}, 5, function(t)
+end),
+    awful.button({}, 5, function(t)
     awful.tag.viewprev(t.screen)
 end))
 
@@ -151,33 +158,39 @@ beautiful.useless_gap = 15
 awful.screen.connect_for_each_screen(function(s)
     s.padding = 15 -- entre la ventan aun siendo no siendo tile
 end)
+-- Manjador de walllpaper
 local function set_wallpaper(s)
     -- Fondo de pantalla
     if beautiful.wallpaper then
         local wallpaper = beautiful.wallpaper
-        -- Si el fondo de pantalla es una función, llámalo con la pantalla
+        -- Si encontro la imagen del fondo de pantalla
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
         end
         -- NOTA : En este punto se coloca el fondo de pantalla
-        -- gears.wallpaper.set(color_white)--un color solido
+        gears.wallpaper.set(color_white)--un color solido
         gears.wallpaper.maximized(url_wallpaper, s, true) -- un archivo formato imagen
-        -- gears.wallpaper.maximized(wallpaper, s, true)
     end
 end
-
 -- Vuelva a configurar el fondo de pantalla cuando cambie la geometría de una pantalla (por ejemplo, una resolución diferente)
 screen.connect_signal("property::geometry", set_wallpaper)
 -- funcion de configuracion de barra (archivo bar.lua)
 throw_bar(awful, set_wallpaper, tasklist_buttons, wibox, gears, color, taglist_buttons)
-
--- {{{ Mouse bindings
-root.buttons(gears.table.join(awful.button({}, 3, function()
-    mymainmenu:toggle()
-end), awful.button({}, 4, awful.tag.viewnext), awful.button({}, 5, awful.tag.viewprev)))
--- }}}
 -- cargar la configuracion de teclas / atajo de teclas 
 relizar_kyes(modkey, awful, hotkeys_popup, gears)
+-- Set keys
+root.keys(globalkeys)
+-- {{{ Mouse bindings
+root.buttons(gears.table.join(
+    awful.button({}, 3, function()
+    mymainmenu:toggle()
+end), 
+    awful.button({}, 4, 
+    awful.tag.viewnext), 
+    awful.button({}, 5, 
+    awful.tag.viewprev)))
+-- }}}
+
 
 clientbuttons = gears.table.join(awful.button({}, 1, function(c)
     c:emit_signal("request::activate", "mouse_click", {
@@ -194,71 +207,53 @@ end), awful.button({modkey}, 3, function(c)
     })
     awful.mouse.client.resize(c)
 end))
-
--- Set keys
-root.keys(globalkeys)
--- }}}
-
 -- {{{ Rules
 -- Normas a aplicar a nuevos clientes (a través de la señal "gestionar").).
 awful.rules.rules = { --- Todos los clientes coincidirán con esta regla.
 {
+    -- propiedades de la nueva ventana
     rule = {},
     properties = {
-        border_width = beautiful.border_width,
-        border_color = beautiful.border_normal,
+        border_color = color_yellow_one,
         focus = awful.client.focus.filter,
+        border_width = "4",
         raise = true,
         keys = clientkeys,
         buttons = clientbuttons,
         screen = awful.screen.preferred,
-        placement = awful.placement.no_overlap + awful.placement.no_offscreen
+        placement = awful.placement.no_overlap + awful.placement.no_offscreen,
     }
-}, -- Floating clients.
+},
 {
-    rule_any = {
-        instance = {"DTA", -- Firefox addon DownThemAll.
-        "copyq", -- Includes session name in class.
-        "pinentry"},
-        class = {"Arandr", "Blueman-manager", "Gpick", "Kruler", "MessageWin", -- kalarm.
-        "Sxiv", "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
-        "Wpa_gui", "veromix", "xtightvncviewer"},
-
-        -- Note that the name property shown in xprop might be set slightly after creation of the client
-        -- and the name shown there might not match defined rules here.
-        name = {"Event Tester" -- xev.
-        },
-        role = {"AlarmWindow", -- Thunderbird's calendar.
-        "ConfigManager", -- Thunderbird's about:config.
-        "pop-up" -- e.g. Google Chrome's (detached) Developer Tools.
-        }
+    --NOTA ESTE ES UN EJEMPLO DE UNA REGLA UNA FORMA DE DECIR COMOQUIERE QUE 
+    -- SE ABRA SIEMPRE ESTA APLICACION (https://awesomewm.org/doc/api/libraries/awful.rules.html#)
+    --[[ rule = { 
+        name = "MPlayer" --app
     },
-    properties = {
-        floating = true
-    }
-}, -- Agregar barras de título a clientes y cuadros de diálogo normales
-{
+    properties = { -- propiedades alteradas (https://awesomewm.org/doc/api/classes/client.html )
+        floating = true 
+        screen = 1, tag = "2"-- Ejemplo de denomiar aplicaciones en las pantalla 
+    } ]]
+}, 
+{-- Agregar barras de título a clientes y cuadros de diálogo normales
     rule_any = {
         type = {"normal", "dialog"}
     },
     properties = {
-        titlebars_enabled = true -- oculatar la barra de las ventanas
+        titlebars_enabled = false -- oculatar la barra de las ventanas
     }
-} -- Set Firefox to always map on the tag named "2" on screen 1.
--- { rule = { class = "Firefox" },
---   properties = { screen = 1, tag = "2" } },
+} 
 }
 -- }}}
 
--- {{{ Signals
--- Signal function to execute when a new client appears.
+-- {{{ Señales
+-- Función de señal para ejecutar cuando aparece un nuevo cliente.
 client.connect_signal("manage", function(c)
-    -- Set the windows at the slave,
-    -- i.e. put it at the end of others instead of setting it master.
-    -- if not awesome.startup then awful.client.setslave(c) end
-
+    -- Establecer las ventanas en el esclavo,
+    -- es decir, ponerlo al final de otros en lugar de configurarlo como maestro.
+    -- si no es asombroso.inicio, entonces horrible.cliente.setslave(c) final
     if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
-        -- Prevent clients from being unreachable after screen count changes.
+        --Evitar la visibilidad entre escritorios 
         awful.placement.no_offscreen(c)
     end
 end)
@@ -280,12 +275,12 @@ client.connect_signal("request::titlebars", function(c)
 
     awful.titlebar(c):setup{
         -- Documentacion (https://awesomewm.org/apidoc/popups_and_bars/awful.titlebar.html)
-        { -- Left
+        { -- Izquierda
             awful.titlebar.widget.iconwidget(c), -- mostar el icono del programa
             buttons = buttons,
             layout = wibox.layout.fixed.horizontal
         },
-        { -- Middle
+        { -- Medio
             { -- Title
                 align = "center",
                 widget = awful.titlebar.widget.titlewidget(c) -- mostar el titulo de ventan
@@ -293,7 +288,7 @@ client.connect_signal("request::titlebars", function(c)
             buttons = buttons,
             layout = wibox.layout.flex.horizontal
         },
-        { -- Right
+        { -- Derecha
             awful.titlebar.widget.ontopbutton(c),
             awful.titlebar.widget.minimizebutton(c), -- miminizar la ventana
             awful.titlebar.widget.maximizedbutton(c),
@@ -304,20 +299,24 @@ client.connect_signal("request::titlebars", function(c)
     }
 end)
 
--- Enable sloppy focus, so that focus follows mouse.
+-- Habilite el enfoque descuidado, de modo que el enfoque siga al mouse.
 client.connect_signal("mouse::enter", function(c)
     c:emit_signal("request::activate", "mouse_enter", {
         raise = false
     })
 end)
-
+-- cuando la ventan esta seleccionada
 client.connect_signal("focus", function(c)
-    c.border_color = beautiful.border_focus
+    c.opacity = "1"
+    c.border_color = color_blue_one
 end)
+-- cuando la ventan no esta seleccionada
 client.connect_signal("unfocus", function(c)
-    c.border_color = beautiful.border_normal
+    c.opacity = "0.8"
+    c.border_color = color_black
 end)
 -- }}}
 -- aplicaciones de ejecucion al inicio del entorno
--- awful.util.spawn("/usr/lib/polkit-kde-authentication-agent-1") -- no colocar & al final
-awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1 &")
+awful.util.spawn("picom")--tranparencia
+awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1 &")--lanzador de ventana para permisos
+awful.spawn.with_shell("mpd")--cargar configuracion de reproductor

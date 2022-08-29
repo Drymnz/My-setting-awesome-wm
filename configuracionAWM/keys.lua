@@ -39,6 +39,47 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
     end, {
         description = "Siguiente ventana",group = "Ventana"
     }),
+    -- musica
+    awful.key(
+        {modkey_alt, modkey_shift}, "w", 
+        function()
+        awful.spawn("mpc toggle")
+        end
+    ,{
+        description = "Reproduce cansion / Detiene la cansion", group = "Music"
+    }),
+    awful.key(
+        {modkey_alt, modkey_shift}, "s", 
+        function()
+        awful.spawn("mpc next")
+        end
+    ,{
+        description = "Siguiente cansion" , group = "Music"
+    }),
+    awful.key(
+        {modkey_alt, modkey_shift}, "a", 
+        function()
+        awful.spawn("mpc prev")
+        end
+    ,{
+        description = "Anterior cansion" , group = "Music"
+    }),
+    awful.key(
+        {modkey_alt, modkey_shift}, "x", 
+        function()
+        awful.spawn("mpc volume -3")
+        end
+    ,{
+        description = "Bajar volumen a la musica" ,  group = "Music"
+    }),
+    awful.key(
+        {modkey_alt, modkey_shift}, "z", 
+        function()
+        awful.spawn("mpc volume +3")
+        end
+    ,{
+        description = "Subir volumen a la musica" , group = "Music"
+    }),
     awful.key(
         {modkey_alt, modkey_shift}, modkey_tab, function()
         awful.client.focus.byidx(-1)
@@ -167,6 +208,22 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
     end, {
         description = "Mover focus a master",group = "Ventana tili"
     }), 
+    awful.key(
+        {modkey, modkey_control}, "p", function(c)
+            if awful.client.swap.byidx(1) then
+                c:swap(awful.client.swap.byidx(1))
+            end
+    end, {
+        description = "Intercambiar posicion con el siguiente",group = "Ventana tili"
+    }),
+    awful.key(
+        {modkey, modkey_control}, "o", function(c)
+            if awful.client.swap.byidx(-1) then
+                c:swap(awful.client.swap.byidx(-1))
+            end
+    end, {
+        description = "Intercambiar posicion con el anterior",group = "Ventana tili"
+    }),
     awful.key(
         {modkey}, "t", function(c)
         c.ontop = not c.ontop
