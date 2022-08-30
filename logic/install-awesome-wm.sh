@@ -23,16 +23,16 @@ no_confirmar="--noconfirm"
 sudo="sudo"
 
 #Listado de paquetes
-pkg_requisitos="${pkg_xorg}  ${pkg_terminal}  ${pkd_scrot}  ${pkg_polkit}  ${pkg_navegador}  ${pkg_sddm}  ${no_confirmar}"
-pkg_herramientas="${pkg_file_manger}  ${pkg_sddm}  ${no_confirmar}"
+pkg_requisitos="${sudo} pacman -Syu ${pkg_xorg}  ${pkg_terminal}  ${pkd_scrot}  ${pkg_polkit}  ${pkg_navegador}  ${pkg_sddm}  ${no_confirmar}"
+pkg_herramientas="${sudo} pacman -Syu ${pkg_file_manger}  ${pkg_sddm}  ${no_confirmar}"
 
 function instalacion_awesome-wm(){
     ##Requisitos
-    ${sudo} pacman -Syu ${pkg_requisitos}
+    ${pkg_requisitos}
     ##Escritorio
     ${sudo} pacman -Syu ${pkg_awesome}
     ##Herramientas
-    ${sudo} pacman -Syu ${pkg_herramientas}
+    ${pkg_herramientas}
 }
 
 #Copiar la configuracion
