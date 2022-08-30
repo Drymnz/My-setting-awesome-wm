@@ -18,5 +18,5 @@ then
     ##Instalacion
     instalacion_gpu
     instalacion_awesome-wm
-    #copiar_configuraracion
+    copiar_configuraracion
 fi

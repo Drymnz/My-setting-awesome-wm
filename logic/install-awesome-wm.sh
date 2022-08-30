@@ -19,7 +19,7 @@ pkg_sddm="sddm 	sddm-kcm"
 #Reproductor de musica en terminal
 pkg_sddm="mpd mpc ncmpcpp"
 #no_confirmar="--noconfirm"
-no_confirmar=" "
+no_confirmar="--noconfirm"
 sudo="sudo"
 
 #Listado de paquetes
@@ -28,11 +28,11 @@ pkg_herramientas="${pkg_file_manger}  ${pkg_sddm}  ${no_confirmar}"
 
 function instalacion_awesome-wm(){
     ##Requisitos
-    ${sudo} pacman -Ss ${pkg_requisitos}
+    ${sudo} pacman -Syu ${pkg_requisitos}
     ##Escritorio
-    ${sudo} pacman -Ss ${pkg_awesome}  ${no_confirmar}
+    ${sudo} pacman -Syu ${pkg_awesome}
     ##Herramientas
-    ${sudo} pacman -Ss ${pkg_herramientas}
+    ${sudo} pacman -Syu ${pkg_herramientas}
 }
 
 #Copiar la configuracion
