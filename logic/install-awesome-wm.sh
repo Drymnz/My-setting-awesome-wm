@@ -23,16 +23,17 @@ no_confirmar="--noconfirm"
 sudo="sudo"
 
 #Listado de paquetes
-pkg_requisitos="${sudo} pacman -Syu ${pkg_xorg}  ${pkg_terminal}  ${pkd_scrot}  ${pkg_polkit}  ${pkg_navegador}  ${pkg_sddm}  ${no_confirmar}"
-pkg_herramientas="${sudo} pacman -Syu ${pkg_file_manger}  ${pkg_sddm}  ${no_confirmar}"
+pkg_requisitos="${pkg_xorg}  ${pkg_terminal}"
+pkg_herramientas_escritorio="${pkg_sddm} ${pkg_file_manger} ${pkd_scrot}  ${pkg_polkit}"
+pkg_herramientas_usuario="${pkg_navegador}"
+#Variable de instalacion
+instalar_pkg_uno="${sudo} pacman -Syu ${pkg_requisitos} ${pkg_herramientas_escritorio} ${pkg_herramientas_usuario} ${no_confirmar}"
 
 function instalacion_awesome-wm(){
-    ##Requisitos
-    ${pkg_requisitos}
+    ##Instar variable 
+    ${instalar_pkg_uno}
     ##Escritorio
-    ${sudo} pacman -Syu ${pkg_awesome}
-    ##Herramientas
-    ${pkg_herramientas}
+    ${sudo} pacman -Syu ${pkg_awesome} --noconfirm
 }
 
 #Copiar la configuracion
@@ -43,6 +44,7 @@ function copiar_configuraracion(){
         mkdir -p "$HOME"/.config/awesome
         mkdir -p "$HOME"/.ncmpcpp
         mkdir -p "$HOME"/.mpd
+        mkdir -p /etc/sddm.conf.d/
         echo "Copiando la configuracion"
         cp -r /etc/xdg/awesome/rc.lua "$HOME"/.config/awesome/rc.lua
         cp -r /usr/share/doc/alacritty/example/alacritty.yml "$HOME"/.config/alacritty/alacritty.yml
@@ -51,5 +53,6 @@ function copiar_configuraracion(){
         cp -r configuracionAlacritty/* "$HOME"/.config/alacritty
         cp -r configuracionMpd/* "$HOME"/.mpd
         cp -r configuracionNcmpcpp/* "$HOME"/.ncmpcpp
-        sudo systemctl enable sddm.service
+        cp -r configuracionSession/* /etc/sddm.conf.d/
+        systemctl enable sddm.service
 }
