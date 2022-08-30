@@ -15,16 +15,16 @@ pkg_navegador="firefox"
 #Manejador de fichero
 pkg_file_manger="thunar"
 #Gestor de escritrorios
-pkg_sddm="sddm 	sddm-kcm"
+pkg_sddm="sddm"
 #Reproductor de musica en terminal
 pkg_sddm="mpd mpc ncmpcpp"
 #no_confirmar="--noconfirm"
 no_confirmar="--noconfirm"
-sudo=""
+sudo="sudo"
 
 #Listado de paquetes
 pkg_requisitos="${pkg_xorg}  ${pkg_terminal}"
-pkg_herramientas_escritorio="${pkg_sddm} ${pkg_file_manger} ${pkd_scrot}  ${pkg_polkit}"
+pkg_herramientas_escritorio="${pkg_file_manger} ${pkd_scrot}  ${pkg_polkit}"
 pkg_herramientas_usuario="${pkg_navegador}"
 #Variable de instalacion
 instalar_pkg_uno="${sudo} pacman -Syu ${pkg_requisitos} ${pkg_herramientas_escritorio} ${pkg_herramientas_usuario} ${no_confirmar}"
@@ -33,7 +33,7 @@ function instalacion_awesome-wm(){
     ##Instar variable 
     ${instalar_pkg_uno}
     ##Escritorio
-    ${sudo} pacman -Syu ${pkg_awesome} --noconfirm
+    ${sudo} pacman -Syu "${pkg_awesome} ${pkg_sddm}" --noconfirm
 }
 
 #Copiar la configuracion
