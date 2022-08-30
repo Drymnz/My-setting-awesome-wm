@@ -11,12 +11,12 @@ function permisos(){
 #Iniciar la instalacion
 echo "¿Desea iniciar la instalacion? [S/n]"
 read -r  instalacion_inicial
-if [[ "${instalacion_inicial}" -eq "s" ]] || [[ "${instalacion_inicial}" -eq "S" ]]
+if [[ "${instalacion_inicial}" == "s" ]] || [[ "${instalacion_inicial}" == "S" ]]
 then
     ##Ceder permisos de ejecucion para los sh
     permisos
     ##Instalacion
     instalacion_gpu
     instalacion_awesome-wm
-    copiar_configuraracion
+    #copiar_configuraracion
 fi

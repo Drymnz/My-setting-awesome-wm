@@ -3,11 +3,11 @@
 pkg_gpu=" "
 
 function instalacion_gpu(){
-    echo "¿Desea instalr un controlador grafico? [Y/n]"
+    echo "¿Desea instalr un controlador grafico? [S/n]"
     read -r gpu
     
-    case "$gpu" in
-        [yY])
+    if [[ "${gpu}" == "s" ]] || [[ "${gpu}" == "S" ]]
+       then
             echo "1) xf86-video-intel 	2) xf86-video-amdgpu 3) nvidia 4) saltar"
             read -r -p "Seleccion una opcion(default 1): " opcio
             case $opcio in
@@ -24,20 +24,14 @@ function instalacion_gpu(){
                 ;;
                 
                 [4])
-                    pkg_gpu=""
+                    pkg_gpu=" "
                 ;;
                 [*])
                     pkg_gpu='xf86-video-intel'
                 ;;
             esac
-            
-        ;;
-        *)
-            pkg_gpu=" "
-        ;;
-    esac
-
+    fi
     # si escojigo una grafica instala sino nada
-    ! [[ "${pkg_gpu}" -eq " " ]] && sudo pacman -Syu "${pkg_gpu}"
+    ! [[ "${pkg_gpu}" == " " ]] && echo sudo pacman -Syu "${pkg_gpu}"
 }
 
