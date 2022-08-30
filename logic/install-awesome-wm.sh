@@ -20,7 +20,7 @@ pkg_sddm="sddm 	sddm-kcm"
 pkg_sddm="mpd mpc ncmpcpp"
 #no_confirmar="--noconfirm"
 no_confirmar="--noconfirm"
-sudo="sudo"
+sudo=""
 
 #Listado de paquetes
 pkg_requisitos="${pkg_xorg}  ${pkg_terminal}"
