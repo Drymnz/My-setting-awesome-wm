@@ -36,6 +36,7 @@ function instalacion_awesome-wm(){
     ##Escritorio
     echo "\n\n\n\n ¡¡Permisos!!!"
     ${sudo} pacman -Syu ${pkg_awesome} --noconfirm
+    ##Gestro de session
     echo "\n\n\n\n ¡¡Permisos!!!"
     ${sudo} pacman -Syu ${pkg_sddm} --noconfirm
 }
