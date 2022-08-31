@@ -22,7 +22,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
     }),
     awful.key(
         {modkey_alt, modkey_control}, "Right", awful.tag.viewnext, {
-        description = "Mover al escritorio izquierdo",group = "Escritorio"
+        description = "Mover al escritorio derecha",group = "Escritorio"
     }),
     -- captura de pantalla 
     awful.key(
@@ -31,13 +31,19 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
         awful.spawn("scrot -s")
         end
     ,{
-        description = "Captura de area",group = "Captura de pantalla"
+        description = "Captura de pantalla en area",group = "Captura de pantalla"
     }),
     awful.key(
         {modkey_alt}, modkey_tab, function()
         awful.client.focus.byidx(1)
     end, {
         description = "Siguiente ventana",group = "Ventana"
+    }),
+    awful.key(
+        {modkey_alt, modkey_shift}, modkey_tab, function()
+        awful.client.focus.byidx(-1)
+    end, {
+        description = "Anterior Siguiente ventana",group = "Ventana"
     }),
     -- musica
     awful.key(
@@ -46,7 +52,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
         awful.spawn("mpc toggle")
         end
     ,{
-        description = "Reproduce cansion / Detiene la cansion", group = "Music"
+        description = "Reproduce cancion / Detiene la cancion", group = "Music"
     }),
     awful.key(
         {modkey_alt, modkey_shift}, "s", 
@@ -54,7 +60,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
         awful.spawn("mpc next")
         end
     ,{
-        description = "Siguiente cansion" , group = "Music"
+        description = "Siguiente cancion" , group = "Music"
     }),
     awful.key(
         {modkey_alt, modkey_shift}, "a", 
@@ -62,7 +68,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
         awful.spawn("mpc prev")
         end
     ,{
-        description = "Anterior cansion" , group = "Music"
+        description = "Anterior cancion" , group = "Music"
     }),
     awful.key(
         {modkey_alt, modkey_shift}, "x", 
@@ -79,12 +85,6 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
         end
     ,{
         description = "Subir volumen a la musica" , group = "Music"
-    }),
-    awful.key(
-        {modkey_alt, modkey_shift}, modkey_tab, function()
-        awful.client.focus.byidx(-1)
-    end, {
-        description = "Anterior Siguiente ventana",group = "Ventana"
     }),
     awful.key(
         {modkey}, "w", function()
@@ -119,7 +119,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
         description = "Siguiente ordenamiento de escritorio",group = "escritorio"
     }), 
     awful.key(
-        {modkey, modkey_shift}, "space", function()
+        {modkey, modkey_alt}, "space", function()
         awful.layout.inc(-1)
     end, {
         description = "Anterior ordenamiento de escritorio",group = "escritorio"
@@ -154,7 +154,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
         {modkey,modkey_alt}, "r", function()
         awful.spawn("alacritty -e sudo reboot")
     end, {
-        description = "Apagar el equipo",group = "Power"
+        description = "Reiniciar el equipo",group = "Power"
     })
 )
     clientkeys = gears.table.join(
