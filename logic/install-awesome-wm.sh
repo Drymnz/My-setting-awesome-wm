@@ -33,10 +33,7 @@ function solicitu_permisos(){
     clear
     echo " "
     echo " "
-    echo " "
     echo "¡¡¡Permisos!!!"
-    echo " "
-    echo " "
     echo " "
     echo " "
 
@@ -71,6 +68,6 @@ function copiar_configuraracion(){
         cp -r configuracionAlacritty/* "$HOME"/.config/alacritty
         cp -r configuracionMpd/* "$HOME"/.mpd
         cp -r configuracionNcmpcpp/* "$HOME"/.ncmpcpp
-        sudo cp -r configuracionSession/* /etc/sddm.conf.d/
+        sudo cp -r configuracionSession/* /etc/sddm.conf.d
         systemctl enable sddm.service
 }

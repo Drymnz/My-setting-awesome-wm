@@ -94,10 +94,15 @@ beautiful.menu_bg_normal = color_black
 beautiful.menu_fg_normal = color_white
 beautiful.menu_bg_focus = color_blue_one
 beautiful.menu_fg_focus = color_black
-navegadores_internet = {{"Fire-Fox", "firefox"}, {"Google-chrome", "google-chrome-stable"}}
+navegadores_internet = {
+    {"Fire-Fox", "firefox"}
+}
 mymainmenu = awful.menu({
-    items = {{"awesome", myawesomemenu, beautiful.awesome_icon}, {"Navegador", navegadores_internet},
-             {"Visual estudio code", "code"}, {"open terminal", terminal}, {"Archivos", "thunar"}}
+    items = {
+        {"awesome", myawesomemenu, beautiful.awesome_icon}, 
+        {"Navegador", navegadores_internet},
+        {"open terminal", terminal},
+        {"Archivos", "thunar"}}
 })
 mylauncher = awful.widget.launcher({
     menu = mymainmenu
@@ -317,6 +322,6 @@ client.connect_signal("unfocus", function(c)
 end)
 -- }}}
 -- aplicaciones de ejecucion al inicio del entorno
-awful.util.spawn("picom")--tranparencia
+--awful.util.spawn("picom")--tranparencia
 awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1 &")--lanzador de ventana para permisos
 awful.spawn.with_shell("mpd")--cargar configuracion de reproductor
