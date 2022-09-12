@@ -139,22 +139,16 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
     -- Menubar
     awful.key(
         {modkey}, "p", function()
-        awful.spawn("rofi -show run")
+        awful.spawn.with_shell("~/.config/awesome/rofi/menu &")
         --awful.screen.focused().mypromptbox:run()
     end, {
         description = "Ver el lanzador en barra",group = "Lanzador"
     }),
     awful.key(
         {modkey,modkey_alt}, "p", function()
-        awful.spawn("alacritty -e sudo poweroff")
+        awful.spawn.with_shell("~/.config/awesome/rofi/powermenu &")
     end, {
-        description = "Apagar el equipo",group = "Power"
-    }),
-    awful.key(
-        {modkey,modkey_alt}, "r", function()
-        awful.spawn("alacritty -e sudo reboot")
-    end, {
-        description = "Reiniciar el equipo",group = "Power"
+        description = "Menu de power",group = "Power"
     })
 )
     clientkeys = gears.table.join(

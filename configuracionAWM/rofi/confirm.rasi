@@ -1,0 +1,33 @@
+* {
+    BG:    #EDFEFE;
+    BGA:   #DEEFEF;
+    FG:    #303030;
+    SEL:   #1DA0E2;
+    UGT:   #EF2D6D;
+	ON:    #17D07D;
+	OFF:   #EF2D6D;
+}
+
+
+* {
+    background-color:       @BG;
+    text-color:             @FG;
+	font:				 	"Iosevka 10";
+}
+
+window {
+    width:      			200px;
+    padding:    			20px;
+    border:					0px 0px 2px 0px;
+    border-radius:          6px;
+    border-color:           @BG;
+    location:               center;
+    x-offset:               0;
+    y-offset:               -4%;
+}
+
+entry {
+    expand: 				true;
+    width: 					150px;
+    text-color:				@BG;
+}

@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+## Default
+ddir="$HOME/.config/awesome/rofi"
+
+rofi_command="rofi -theme "$HOME"/.config/awesome/rofi/design-power.rasi"
+
+uptime=$(uptime -p | sed -e 's/up //g')
+
+## Buttons
+shutdown="Apagar"
+reboot="Reiniciar"
+logout="Cerra seccion"
+
+# Ask for confirmation
+rdialog () {
+rofi -dmenu\
+    -i\
+    -no-fixed-num-lines\
+    -p "¿Estas seguro (s/n) ?: "\
+    -theme "$ddir/confirm.rasi"
+}
+
+# Display Help
+show_msg() {
+	rofi -theme "$ddir/askpass.rasi" -e "Opciones : si / no / s / n"
+}
+
+# Variable passed to rofi
+options="$logout\n$reboot\n$shutdown"
+
+chosen="$(echo -e "$options" | $rofi_command -p "Tiempo encendido $uptime" -dmenu -selected-row 0)"
+case $chosen in
+    $shutdown)
+		ans=$(rdialog &)
+		if [[ $ans == "si" ]] || [[ $ans == "SI" ]] || [[ $ans == "s" ]]; then
+			systemctl poweroff
+		elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
+			exit
+        else
+			show_msg
+        fi
+        ;;
+    $reboot)
+		ans=$(rdialog &)
+		if [[ $ans == "si" ]] || [[ $ans == "SI" ]] || [[ $ans == "s" ]]; then
+			systemctl reboot
+		elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
+			exit
+        else
+			show_msg
+        fi
+        ;;
+    $logout)
+		ans=$(rdialog &)
+		if [[ $ans == "si" ]] || [[ $ans == "SI" ]] || [[ $ans == "s" ]]; then
+			awesome -r
+		elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
+			exit
+        else
+			show_msg
+        fi
+        ;;
+esac
+

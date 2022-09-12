@@ -9,25 +9,41 @@ pkg_terminal="alacritty"
 #El escritorio
 pkg_awesome="awesome"
 #Para captura de pantalla
-pkd_scrot="scrot"
+pkg_scrot="scrot"
 #Navegador
-pkg_navegador="firefox"
+pkg_navegador="firefox"ç
+#lanzador de aplicacioens
+pkg_rofi="rofi"
+#Transparencia
+pkg_picom="picom"
+#Programas extras
+pkg_video_app="parole"
+pkg_imagenes_app="eog"
+pkg_zip_app="ark p7zip"
+#Controladores
+pkg_android="android-tools gvfs-mtp"
+pkg_ntfs="ntfs-3g"
+pkg_exfast="exfat-utils"
+pkg_usb="usbutils usb_modeswitch gvfs"
+pkg_iphone="gvfs-afc"
+pkg_mac="apparmor"
 #Manejador de fichero
 pkg_file_manger="thunar"
 #Gestor de escritrorios
 pkg_sddm="sddm sddm-kcm"
 #Reproductor de musica en terminal
 pkg_mpd="mpd mpc ncmpcpp"
-#no_confirmar="--noconfirm"
+#comandos de pacman 
 no_confirmar="--noconfirm"
 sudo="sudo"
 
 #Listado de paquetes
 pkg_requisitos="${pkg_xorg}  ${pkg_terminal}"
-pkg_herramientas_escritorio="${pkg_file_manger} ${pkd_scrot}  ${pkg_polkit}"
+pkg_controladores="${pkg_mac}  ${pkg_iphone} ${pkg_usb} ${pkg_exfast} ${pkg_ntfs} ${pkg_android}"
+pkg_herramientas_escritorio="${pkg_scrot} ${pkg_rofi} ${pkg_picom} ${pkg_video_app} ${pkg_imagenes_app} ${pkg_zip_app} ${pkg_polkit}"
 pkg_herramientas_usuario="${pkg_navegador} ${pkg_mpd}"
 #Variable de instalacion
-instalar_pkg_uno="${sudo} pacman -Syu ${pkg_requisitos} ${pkg_herramientas_escritorio} ${pkg_herramientas_usuario} ${no_confirmar}"
+instalar_pkg_uno="${sudo} pacman -Syu ${pkg_requisitos} ${pkg_herramientas_escritorio} ${pkg_herramientas_usuario} ${pkg_controladores} ${no_confirmar}"
 
 function solicitu_permisos(){
     clear
@@ -46,9 +62,12 @@ function instalacion_awesome-wm(){
     ##Escritorio
     solicitu_permisos
     ${sudo} pacman -Syu ${pkg_awesome} --noconfirm
-    ##Gestro de session
+    ##Gestor de session
     solicitu_permisos
     ${sudo} pacman -Syu ${pkg_sddm} --noconfirm
+    ##Gestor de archivos
+    solicitu_permisos
+    ${sudo} pacman -Syu ${pkg_file_manger} --noconfirm
 }
 
 #Copiar la configuracion
