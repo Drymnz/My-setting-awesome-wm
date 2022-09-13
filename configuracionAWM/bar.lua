@@ -1,6 +1,34 @@
+
 function throw_bar(awful,set_wallpaper,tasklist_buttons,wibox,gears,color,taglist_buttons)
 
     awful.screen.connect_for_each_screen(function(s)
+
+        -- widget personales(https://awesomewm.org/doc/api/classes/wibox.widget.textbox.html)
+        time_update = 2
+        --uso de ram
+        mostra_men_user = awful.widget.watch('bash -c "free -m | grep Mem | awk \'{print $3}\'"', time_update)
+        text_memoria = wibox.widget{
+            markup = ' MB ',
+            align  = 'center',
+            valign = 'center',
+            widget = wibox.widget.textbox
+        }
+        --uso de cpu
+        mostra_cpu_user = awful.widget.watch('bash -c "echo $[100-$(vmstat 1 2|tail -1|awk \'{print $15}\')]"', 1)
+        porcentaje_cpu = wibox.widget{
+            markup = '%--',
+            align  = 'center',
+            valign = 'center',
+            widget = wibox.widget.textbox
+        }
+        --espacio en blando
+        spec_men_cpu = wibox.widget{
+            markup = ' MB CPU :',
+            align  = 'center',
+            valign = 'center',
+            widget = wibox.widget.textbox
+        }
+
         -- Fondo de pantalla
         set_wallpaper(s)
         
@@ -87,6 +115,8 @@ function throw_bar(awful,set_wallpaper,tasklist_buttons,wibox,gears,color,taglis
                 s.mypromptbox
             },
             s.mytasklist, -- Widget medio
+            --- {{{ Volume Indicator
+
             { -- derecha widgets
                 layout = wibox.layout.fixed.horizontal,
                 -- mykeyboardlayout, el tecldo 
@@ -94,7 +124,12 @@ function throw_bar(awful,set_wallpaper,tasklist_buttons,wibox,gears,color,taglis
                     string = color_yellow_two
                 }, -- las terea en segundo plano
                 wibox.widget.textclock('%B %d -- %H:%M --'), -- Crear un widget de reloj de texto (https://awesomewm.org/apidoc/widgets/wibox.widget.textclock.html)
-                s.mylayoutbox -- este es el de como sera ordenado las ventanas
+                -- uso de memoria          
+                mostra_men_user,
+                spec_men_cpu,
+                mostra_cpu_user,
+                porcentaje_cpu,
+                s.mylayoutbox, -- este es el de como sera ordenado las ventanas      
             }
         }
     end)
