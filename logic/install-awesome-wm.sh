@@ -19,7 +19,10 @@ pkg_picom="picom"
 #Programas extras
 pkg_video_app="parole"
 pkg_imagenes_app="eog"
-pkg_zip_app="ark p7zip"
+pkg_zip_app="ark p7zip unzip unrar"
+pkg_edit_text="mousepad"
+pkg_them_fonts="gnome-font-viewer mate-icon-theme mate-icon-theme-faenza mate-themes lxqt-qtplugin lxqt-themes"
+pkg_them_fonts_two="exo xfwm4-themes ttf-dejavu noto-fonts noto-fonts-emoji"
 #Controladores
 pkg_android="android-tools gvfs-mtp"
 pkg_ntfs="ntfs-3g"
@@ -28,7 +31,7 @@ pkg_usb="usbutils usb_modeswitch gvfs"
 pkg_iphone="gvfs-afc"
 pkg_mac="apparmor"
 #Manejador de fichero
-pkg_file_manger="thunar"
+pkg_file_manger="thunar thunar-volman thunar-media-tags-plugin thunar-archive-plugin"
 #Gestor de escritrorios
 pkg_sddm="sddm sddm-kcm"
 #Reproductor de musica en terminal
@@ -39,11 +42,11 @@ sudo="sudo"
 
 #Listado de paquetes
 pkg_requisitos="${pkg_xorg}  ${pkg_terminal}"
-pkg_controladores="${pkg_mac}  ${pkg_iphone} ${pkg_usb} ${pkg_exfast} ${pkg_ntfs} ${pkg_android}"
-pkg_herramientas_escritorio="${pkg_scrot} ${pkg_rofi} ${pkg_picom} ${pkg_video_app} ${pkg_imagenes_app} ${pkg_zip_app} ${pkg_polkit}"
+pkg_controladores="${pkg_mac}  ${pkg_iphone} ${pkg_usb} ${pkg_exfast} ${pkg_ntfs} ${pkg_android} "
+pkg_herramientas_escritorio="${pkg_scrot} ${pkg_rofi} ${pkg_picom} ${pkg_video_app} ${pkg_imagenes_app} ${pkg_zip_app} ${pkg_polkit} ${pkg_edit_text} ${pkg_them_fonts_two} ${pkg_them_fonts} "
 pkg_herramientas_usuario="${pkg_navegador} ${pkg_mpd}"
 #Variable de instalacion
-instalar_pkg_uno="${sudo} pacman -Syu ${pkg_requisitos} ${pkg_herramientas_escritorio} ${pkg_herramientas_usuario} ${pkg_controladores} ${no_confirmar}"
+instalar_pkg_uno="${sudo} pacman -Syu ${pkg_requisitos} ${pkg_herramientas_escritorio} ${pkg_herramientas_usuario} ${pkg_controladores} ${no_confirmar} "
 
 function solicitu_permisos(){
     clear
