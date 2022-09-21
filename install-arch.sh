@@ -5,8 +5,19 @@ source ./logic/install-awesome-wm.sh
 
 ##Funcion para permisos de sh
 function permisos(){
+    #Permisos de instalacion
     chmod +x ./logic/install-gpu.sh
     chmod +x ./logic/install-awesome-wm.sh
+    chmod +x ./logic/install-extens-awesome.sh
+}
+function permisos_two(){
+    #Permisos de pos-instalacion
+    chmod +x $HOME/.config/awesome/rofi/askpass.rasi
+    chmod +x $HOME/.config/awesome/rofi/confirm.rasi
+    chmod +x $HOME/.config/awesome/rofi/design-power.rasi
+    chmod +x $HOME/.config/awesome/rofi/design.rasi
+    chmod +x $HOME/.config/awesome/rofi/menu
+    chmod +x $HOME/.config/awesome/rofi/powermenu
 }
 #Iniciar la instalacion
 echo "¿Desea iniciar la instalacion? [S/n]"
@@ -19,4 +30,6 @@ then
     instalacion_gpu
     instalacion_awesome-wm
     copiar_configuraracion
+    #Para que se puede usar los archivos copiado en rofi
+    permisos_two
 fi
