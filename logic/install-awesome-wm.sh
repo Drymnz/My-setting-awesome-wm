@@ -39,7 +39,7 @@ pkg_mpd="mpd mpc ncmpcpp"
 #Gestor
 pkg_gestor_disco="gnome-disk-utility"
 pkg_gestor_energia="xfce4-power-manager"
-pkg_gestor_contraseñas="xfce4-appfinder"
+pkg_gestor_con="xfce4-appfinder"
 #comandos de pacman 
 no_confirmar="--noconfirm"
 sudo="sudo"
@@ -48,7 +48,7 @@ sudo="sudo"
 pkg_requisitos="${pkg_xorg}  ${pkg_terminal}"
 pkg_controladores="${pkg_mac}  ${pkg_iphone} ${pkg_usb} ${pkg_exfast} ${pkg_ntfs} ${pkg_android} "
 pkg_herramientas_escritorio="${pkg_scrot} ${pkg_rofi} ${pkg_picom} ${pkg_video_app} ${pkg_imagenes_app} ${pkg_zip_app} ${pkg_polkit} ${pkg_edit_text} ${pkg_them_fonts_two} ${pkg_them_fonts} "
-pkg_herramientas_usuario="${pkg_navegador} ${pkg_mpd} ${pkg_gestor_contraseñas} ${pkg_gestor_energia} ${pkg_gestor_disco} "
+pkg_herramientas_usuario="${pkg_navegador} ${pkg_mpd} ${pkg_gestor_con} ${pkg_gestor_energia} ${pkg_gestor_disco} "
 #Variable de instalacion
 instalar_pkg_uno="${sudo} pacman -Syu ${pkg_requisitos} ${pkg_herramientas_escritorio} ${pkg_herramientas_usuario} ${pkg_controladores} ${no_confirmar} "
 
