@@ -43,4 +43,6 @@ then
     permisos_two
     #Solicitar para instalar paquetes Vulkan OpenGL Mesa Otros
     instalacion_gpu_game
+    #Cargar fuentes de microsfot
+    install_extends_fonts_microsoft
 fi
