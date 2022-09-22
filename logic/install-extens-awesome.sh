@@ -12,7 +12,7 @@ pkg_them_fonts_two="exo xfwm4-themes ttf-dejavu noto-fonts noto-fonts-emoji ttf-
 #Gestor
 pkg_gestor_disco="gnome-disk-utility"
 pkg_gestor_energia="xfce4-power-manager"
-pkg_gestor_password="xfce4-appfinder"
+pkg_gestor_password="gnome-keyring libsecret libgnome-keyring"
 pkg_gestor_audio="pavucontrol"
 
 #Listado de paquetes
