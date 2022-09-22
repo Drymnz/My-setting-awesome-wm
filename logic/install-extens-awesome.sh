@@ -44,6 +44,7 @@ function install_extends_fonts_microsoft(){
 }
 
 function install_extends(){
+    mkdir -p "$HOME"/.local/share/keyrings
     sudo pacman -S --needed ${instar_extends} --noconfirm
     install_extends_fonts_microsoft
 }
