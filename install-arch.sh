@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set +x
 
 source ./logic/install-gpu.sh
 source ./logic/install-gpu-game.sh
@@ -32,10 +32,15 @@ then
     ##Ceder permisos de ejecucion para los sh
     permisos
     ##Instalacion
+    clear
     instalacion_gpu
+    clear
+    ###Instalacion de aweseme y su configuracion
     instalacion_awesome-wm
     copiar_configuraracion
-    claer
+    clear
     #Para que se puede usar los archivos copiado en rofi
     permisos_two
+    #Solicitar para instalar paquetes Vulkan OpenGL Mesa Otros
+    instalacion_gpu_game
 fi

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #Importa las extenciones
-source ./install-extens-awesome.sh
+source ./logic/install-extens-awesome.sh
 
 #Herramientas para awesome 
 pkg_xorg="xorg xorg-xinit xorg-xinput"
@@ -22,7 +22,7 @@ pkg_picom="picom"
 #Controladores
 pkg_android="android-tools gvfs-mtp"
 pkg_ntfs="ntfs-3g gvfs-nfs gvfs-smb smartmontools"
-pkg_exfast="exfat-utils exfatprogs fatresize"
+pkg_exfast="exfat-utils fatresize"
 pkg_usb="usbutils usb_modeswitch gvfs usbmuxd"
 pkg_iphone="gvfs gvfs-afc gvfs-google gvfs-gphoto2 gvfs-goa"
 pkg_mac="apparmor"
@@ -58,7 +58,7 @@ function solicitu_permisos(){
 function instalacion_awesome-wm(){
     ##Instar variable 
     solicitu_permisos
-    sudo pacman -Syu --noconfirm
+    sudo pacman -Syyu --noconfirm
     ${instalar_pkg_uno}
     ##Escritorio
     solicitu_permisos

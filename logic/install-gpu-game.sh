@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-
-
 #Listado Opengl
 pkg_opengl_standar="ftgl opengl-man-pages libvdpau-va-gl"
 pkg_opengl_intel="intel-compute-runtime intel-graphics-compiler"
@@ -27,8 +25,8 @@ pkg_otros_nvidia="nvidia-utils libvdpau libxnvctrl nvidia-prime nvidia-settings 
 pkg_all_standar="${pkg_opengl_standar} ${pkg_vulkan_standar} ${pkg_mesa_standar} ${pkg_otros_standar} "
 
 
-function instalacion_gpu(){
-    echo "¿Desea instalr un controlador grafico? [S/n]"
+function instalacion_gpu_game(){
+    echo "¿Desea instalar paquetas para jugar (Vulkan,OpenGl,Mesa y otros)? [S/n]"
     read -r gpu
     
     if [[ "${gpu}" == "s" ]] || [[ "${gpu}" == "S" ]]
@@ -49,14 +47,15 @@ function instalacion_gpu(){
                 ;;
                 
                 [4])
-                    pkg_gpu_game=" "
+                    pkg_gpu_game="0"
                 ;;
                 [*])
                     pkg_gpu_game="${pkg_all_standar} ${pkg_opengl_intel} ${pkg_vulkan_intel} ${pkg_otros_intel}"
                 ;;
             esac
+            else
+            pkg_gpu_game="0"
     fi
     # si escojigo una grafica instala sino nada
-    ! [[ "${pkg_gpu_game}" == " " ]] && sudo pacman -S --needed "${pkg_gpu_game}"
+    ! [[ "${pkg_gpu_game}" == "0" ]] && sudo pacman -S --needed ${pkg_gpu_game}
 }
-
