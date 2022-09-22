@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
+set -e
+
 source ./logic/install-gpu.sh
+source ./logic/install-gpu-game.sh
 source ./logic/install-awesome-wm.sh
 
 ##Funcion para permisos de sh
 function permisos(){
     #Permisos de instalacion
     chmod +x ./logic/install-gpu.sh
+    chmod +x ./logic/install-gpu-game.sh
     chmod +x ./logic/install-awesome-wm.sh
     chmod +x ./logic/install-extens-awesome.sh
 }
@@ -20,6 +24,7 @@ function permisos_two(){
     chmod +x $HOME/.config/awesome/rofi/powermenu
 }
 #Iniciar la instalacion
+clear
 echo "¿Desea iniciar la instalacion? [S/n]"
 read -r  instalacion_inicial
 if [[ "${instalacion_inicial}" == "s" ]] || [[ "${instalacion_inicial}" == "S" ]]
@@ -30,6 +35,7 @@ then
     instalacion_gpu
     instalacion_awesome-wm
     copiar_configuraracion
+    claer
     #Para que se puede usar los archivos copiado en rofi
     permisos_two
 fi

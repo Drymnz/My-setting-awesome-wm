@@ -8,15 +8,15 @@ function instalacion_gpu(){
     
     if [[ "${gpu}" == "s" ]] || [[ "${gpu}" == "S" ]]
        then
-            echo "1) xf86-video-intel 	2) xf86-video-amdgpu 3) nvidia 4) saltar"
+            echo "1) INTEL 	2) AMD 3) NVIDIA 4) saltar"
             read -r -p "Seleccion una opcion(default 1): " opcio
             case $opcio in
                 [1])
-                    pkg_gpu='xf86-video-intel'
+                    pkg_gpu='xf86-video-intel mesa lib32-mesa'
                 ;;
                 
                 [2])
-                    pkg_gpu='xf86-video-amdgpu'
+                    pkg_gpu='xf86-video-amdgpu xf86-video-ati mesa lib32-mesa'
                 ;;
                 
                 [3])
@@ -27,11 +27,11 @@ function instalacion_gpu(){
                     pkg_gpu=" "
                 ;;
                 [*])
-                    pkg_gpu='xf86-video-intel'
+                    pkg_gpu='xf86-video-intel mesa lib32-mesa'
                 ;;
             esac
     fi
     # si escojigo una grafica instala sino nada
-    ! [[ "${pkg_gpu}" == " " ]] && echo sudo pacman -Syu "${pkg_gpu}"
+    ! [[ "${pkg_gpu}" == " " ]] && sudo pacman -S --needed "${pkg_gpu}"
 }
 
