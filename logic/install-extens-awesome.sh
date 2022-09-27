@@ -1,19 +1,20 @@
 #!/usr/bin/env bash
 
 #Programas extras
-pkg_video_app="parole"
+pkg_video_app="parole gst-libav"
 pkg_musci_view="lollypop"
 pkg_imagenes_app="eog"
 pkg_edit_text="mousepad"
 pkg_zip_app="ark p7zip unzip unrar"
 pkg_them_fonts="gnome-font-viewer mate-icon-theme mate-icon-theme-faenza mate-themes lxqt-qtplugin lxqt-themes"
-pkg_them_fonts_two="exo xfwm4-themes ttf-dejavu noto-fonts noto-fonts-emoji ttf-liberation wqy-zenhei   "
+pkg_them_fonts_two="exo xfwm4-themes ttf-dejavu noto-fonts noto-fonts-emoji ttf-liberation wqy-zenhei gnome-themes-extra "
 
 #Gestor
 pkg_gestor_disco="gnome-disk-utility"
 pkg_gestor_energia="xfce4-power-manager"
 pkg_gestor_password="gnome-keyring libsecret libgnome-keyring"
 pkg_gestor_audio="pavucontrol"
+pkg_gestor_temas="lxappearance"
 
 #Listado de paquetes
 pkg_gestores="${pkg_gestor_disco} ${pkg_gestor_energia} ${pkg_gestor_password} ${pkg_gestor_audio}"

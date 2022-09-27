@@ -28,7 +28,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
     awful.key(
         {modkey, modkey_shift}, "s", 
         function()
-        awful.spawn("scrot -s")
+        awful.spawn.with_shell("scrot -s &")
         end
     ,{
         description = "Captura de pantalla en area",group = "Captura de pantalla"
@@ -49,7 +49,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
     awful.key(
         {modkey_alt, modkey_shift}, "w", 
         function()
-        awful.spawn("mpc toggle")
+        awful.spawn.with_shell("mpc  toggle &")
         end
     ,{
         description = "Reproduce cancion / Detiene la cancion", group = "Music"
@@ -57,7 +57,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
     awful.key(
         {modkey_alt, modkey_shift}, "s", 
         function()
-        awful.spawn("mpc next")
+        awful.spawn.with_shell("mpc next &")
         end
     ,{
         description = "Siguiente cancion" , group = "Music"
@@ -65,7 +65,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
     awful.key(
         {modkey_alt, modkey_shift}, "a", 
         function()
-        awful.spawn("mpc prev")
+        awful.spawn.with_shell("mpc prev &")
         end
     ,{
         description = "Anterior cancion" , group = "Music"
@@ -73,7 +73,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
     awful.key(
         {modkey_alt, modkey_shift}, "x", 
         function()
-        awful.spawn("mpc volume -3")
+        awful.spawn.with_shell("mpc volume -3 &")
         end
     ,{
         description = "Bajar volumen a la musica" ,  group = "Music"
@@ -81,7 +81,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
     awful.key(
         {modkey_alt, modkey_shift}, "z", 
         function()
-        awful.spawn("mpc volume +3")
+        awful.spawn.with_shell("mpc volume +3 &")
         end
     ,{
         description = "Subir volumen a la musica" , group = "Music"
