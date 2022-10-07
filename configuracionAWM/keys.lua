@@ -9,6 +9,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
         c.maximized = not c.maximized
         c:raise()
     end
+
     -- el primer atajo es bueno para ver cules teclas hay establecido
     globalkeys = gears.table.join(
     awful.key(
@@ -245,7 +246,48 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
         c:raise()
     end, {
         description = "(un)maximize horizontally (only tili)",group = "Ventana tili"
-    }))
+    })
+    , 
+    --Estilos del entorno
+     awful.key(
+        {modkey, modkey_alt}, "9",
+           function (awesome)
+            awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Basic/rc.lua $HOME/.config/awesome/rc.lua")
+            awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Basic/bar.lua $HOME/.config/awesome/bar.lua")
+            awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Basic/color.lua $HOME/.config/awesome/color.lua")
+            awful.spawn.with_shell("echo 'awesome.restart()' | awesome-client")
+           end
+        , 
+        {
+            description = "default",group = "Estilos"
+    })
+    ,
+    awful.key(
+        {modkey, modkey_alt}, "1",
+            function ()
+                awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Ruka-Sarashina/rc.lua $HOME/.config/awesome/rc.lua")
+                awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Ruka-Sarashina/bar.lua $HOME/.config/awesome/bar.lua")
+                awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Ruka-Sarashina/color.lua $HOME/.config/awesome/color.lua")
+                awful.spawn.with_shell("echo 'awesome.restart()' | awesome-client")
+            end
+        , 
+        {
+            description = "Ruka Sarashina",group = "Estilos"
+    })
+    ,
+    awful.key(
+        {modkey, modkey_alt}, "2",
+            function ()
+                awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Rick-And-Morty/rc.lua $HOME/.config/awesome/rc.lua")
+                awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Rick-And-Morty/bar.lua $HOME/.config/awesome/bar.lua")
+                awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Rick-And-Morty/color.lua $HOME/.config/awesome/color.lua")
+                awful.spawn.with_shell("echo 'awesome.restart()' | awesome-client")
+            end
+        , 
+        {
+            description = "Rick and Morty",group = "Estilos"
+    })
+    )
     -- Vincule todos los números clave a las etiquetas.
     -- Tenga cuidado: usamos códigos clave para que funcione en cualquier diseño de teclado.
     -- Esto debería estar en la fila superior de su teclado, generalmente del 1 al 9.

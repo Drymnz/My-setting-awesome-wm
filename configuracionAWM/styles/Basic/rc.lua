@@ -326,11 +326,9 @@ end)
 client.connect_signal("unfocus", function(c)
     c.border_color = beautiful.border_normal
 end)
+-- }}}
 -- aplicaciones de ejecucion al inicio del entorno
-awful.util.spawn("picom")--tranparencia
-awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1 &")--lanzador de ventana para permisos
-awful.spawn.with_shell("mpd &")--cargar configuracion de reproductor
---awful.spawn.with_shell("/usr/bin/pipewire &")--controlador de audio
---awful.spawn.with_shell("/usr/bin/pipewire-pulse &")--controlador de audio
+--awful.util.spawn("picom")--tranparencia
+--awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1 &")--lanzador de ventana para permisos
 --color del listado aplicaciones de segundo plano
 beautiful.bg_systray = "000000"
