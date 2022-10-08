@@ -92,7 +92,8 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
         mymainmenu:show()
     end, {
         description = "Ver menu",group = "awesome"
-    }), -- Layout manipulation
+    }),
+     -- Layout manipulation
     awful.key(
         {modkey}, modkey_tab, 
         function()
@@ -168,16 +169,17 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
     }),
     -- documentacion para la modificacion de ventan (https://awesomewm.org/apidoc/core_components/client.html#Object_properties)
     awful.key(
-        {modkey}, "Left", function(c)
-        if c.maximized then
-            miminizar(c)
-            miminizar(c)
-        else
-            miminizar(c)
-        end
-        c.width= ((c.width)/2)-15
-        --c:relative_move(0, 0, (c.width)/2, (c.width)/2)--este comando crece
-    end, {
+        {modkey}, "Left", 
+        function(c)
+            if c.maximized then
+                miminizar(c)
+                miminizar(c)
+            else
+                miminizar(c)
+            end
+                c.width= ((c.width)/2)-15
+                --c:relative_move(0, 0, (c.width)/2, (c.width)/2)--este comando crece
+        end, {
         description = "Ajustar ventana a la mita de pantalla izquierda",group = "Ventana"
     }), awful.key(
         {modkey}, "Right", function(c)

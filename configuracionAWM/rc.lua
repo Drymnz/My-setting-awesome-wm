@@ -23,7 +23,7 @@ require("bar")
 -- importar para cargar lo comandos de tecla global
 require("keys")
 -- NOTA COLOCAR LA RUTA DEL LA IMAGEN /home/{usario}/.config/awesome/wallpaper/Ruka Sarashina.jpg"
-url_wallpaper = "/home/drymnz/.config/awesome/wallpaper/Ruka Sarashina.jpg"
+url_wallpaper = "/home/drymnz/.config/awesome/wallpaper/Rick and Morty.jpg"
 -- {{{ Manejo de errores
 -- Compruebe si Awesome encontró un error durante el inicio y volvió a
 -- otra configuración (Este código solo se ejecutará para la configuración alternativa)
@@ -60,31 +60,18 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 terminal = "alacritty"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
-
 -- Tecla de modo predeterminada.
 -- Usualmente, Mod4 es la tecla con un logo entre Control y Alt.
 -- Esta definicio de Mod4 se refiere a la tecla de inicio del teclado
 -- tambien conocida como tecla de windows
 modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
-awful.layout.layouts = {
-awful.layout.suit.floating, 
-awful.layout.suit.tile, 
-awful.layout.suit.tile.left,
-awful.layout.suit.tile.bottom,
-awful.layout.suit.tile.top, 
-awful.layout.suit.fair,
-awful.layout.suit.fair.horizontal,
-awful.layout.suit.spiral, 
-awful.layout.suit.spiral.dwindle,
-awful.layout.suit.max, 
-awful.layout.suit.max.fullscreen, 
-awful.layout.suit.magnifier,
-awful.layout.suit.corner.nw 
--- awful.layout.suit.corner.ne,
--- awful.layout.suit.corner.sw,
--- awful.layout.suit.corner.se,
-}
+awful.layout.layouts = 
+    { 
+        -- puede agregar mas si lo desea, mas informacion (https://awesomewm.org/apidoc/libraries/awful.layout.html)
+    awful.layout.suit.floating, -- ventana flotable
+    awful.layout.suit.fair, -- awful.layout.suit.spiral,-- forma de un caracol
+    }
 -- }}}
 -- {{{ Menú
 -- Crear un widget de inicio y un menú principal
@@ -94,14 +81,25 @@ myawesomemenu = {
 {"manual", terminal .. " -e man awesome"},
 {"edit config", editor_cmd .. " " .. awesome.conffile},
 {"restart", awesome.restart},
-{"quit", function()
-awesome.quit()
-end}}
+}
 --Listado de app del menu
+beautiful.menu_height = 20
+beautiful.menu_width = 200
+beautiful.menu_bg_normal = color_black
+beautiful.menu_fg_normal = color_white
+beautiful.menu_bg_focus = color_azul_one
+beautiful.menu_fg_focus = color_black
+navegadores_internet = {
+    {"Fire-Fox", "firefox"}
+}
 mymainmenu = awful.menu({
     items = {
-        {"awesome", myawesomemenu, beautiful.awesome_icon}, {"open terminal", terminal}}
+        {"awesome", myawesomemenu, beautiful.awesome_icon}, 
+        {"Navegador", navegadores_internet},
+        {"open terminal", terminal},
+        {"Archivos", "thunar"}}
 })
+--modificar el icono del menu
 mylauncher = awful.widget.launcher({
     image = beautiful.awesome_icon,
     menu = mymainmenu
@@ -127,11 +125,6 @@ end), awful.button({}, 4, function(t)
 end), awful.button({}, 5, function(t)
     awful.tag.viewprev(t.screen)
 end))
--- Distancia entre laterales
---beautiful.useless_gap = 15
---awful.screen.connect_for_each_screen(function(s)
---    s.padding = 15 -- entre la ventan aun siendo no siendo tile
---end)
 local tasklist_buttons = gears.table.join(awful.button({}, 1, function(c)
     if c == client.focus then
         c.minimized = true
@@ -152,9 +145,9 @@ end), awful.button({}, 5, function()
     awful.client.focus.byidx(-1)
 end))
 -- Distancia entre laterales
---awful.screen.connect_for_each_screen(function(s)
---    s.padding = 15 -- entre la ventan aun siendo no siendo tile
---end)
+awful.screen.connect_for_each_screen(function(s)
+    s.padding = 15 -- entre la ventan aun siendo no siendo tile
+end)
 -- Manjador de walllpaper
 local function set_wallpaper(s)
     -- Si encontro la imagen del fondo de pantalla
@@ -183,13 +176,30 @@ screen.connect_signal("property::geometry", set_wallpaper)
 -- funcion de configuracion de barra (archivo bar.lua)
 throw_bar(awful, set_wallpaper, tasklist_buttons, wibox, gears, color, taglist_buttons)
 -- {{{ Mouse bindings
-root.buttons(
-    gears.table.join(awful.button({}, 3,
-    function()
+root.buttons(gears.table.join(
+    awful.button({}, 3, function()
     mymainmenu:toggle()
-    end),
-    awful.button({}, 4, awful.tag.viewnext),
-    awful.button({}, 5, awful.tag.viewprev)))
+end), 
+    awful.button({}, 4, 
+    awful.tag.viewnext), 
+    awful.button({}, 5, 
+    awful.tag.viewprev)))
+-- }}}
+clientbuttons = gears.table.join(awful.button({}, 1, function(c)
+    c:emit_signal("request::activate", "mouse_click", {
+        raise = true
+    })
+end), awful.button({modkey}, 1, function(c)
+    c:emit_signal("request::activate", "mouse_click", {
+        raise = true
+    })
+    awful.mouse.client.move(c)
+end), awful.button({modkey}, 3, function(c)
+    c:emit_signal("request::activate", "mouse_click", {
+        raise = true
+    })
+    awful.mouse.client.resize(c)
+end))
 -- }}}
 -- cargar la configuracion de teclas / atajo de teclas 
 relizar_kyes(modkey, awful, hotkeys_popup, gears)
@@ -201,20 +211,21 @@ root.keys(globalkeys)
 -- Normas a aplicar a nuevos clientes (a través de la señal "gestionar").).
 awful.rules.rules = { --- Todos los clientes coincidirán con esta regla.
 {
+    -- propiedades de la nueva ventana
     rule = {},
     properties = {
-        border_width = beautiful.border_width,
-        border_color = beautiful.border_normal,
+        border_color = color_yellow_one,
         focus = awful.client.focus.filter,
+        border_width = "4",
         raise = true,
         keys = clientkeys,
         buttons = clientbuttons,
         screen = awful.screen.preferred,
-        placement = awful.placement.no_overlap + awful.placement.no_offscreen
+        placement = awful.placement.no_overlap + awful.placement.no_offscreen,
     }
-}, -- Floating clients.
+},
 {
-            --NOTA ESTE ES UN EJEMPLO DE UNA REGLA UNA FORMA DE DECIR COMOQUIERE QUE 
+    --NOTA ESTE ES UN EJEMPLO DE UNA REGLA UNA FORMA DE DECIR COMOQUIERE QUE 
     -- SE ABRA SIEMPRE ESTA APLICACION (https://awesomewm.org/doc/api/libraries/awful.rules.html#)
     --[[ rule = { 
         name = "MPlayer" --app
@@ -223,38 +234,15 @@ awful.rules.rules = { --- Todos los clientes coincidirán con esta regla.
         floating = true 
         screen = 1, tag = "2"-- Ejemplo de denomiar aplicaciones en las pantalla 
     } ]]
-    rule_any = {
-        instance = {"DTA", -- Firefox addon DownThemAll.
-        "copyq", -- Includes session name in class.
-        "pinentry"},
-        class = {"Arandr", "Blueman-manager", "Gpick", "Kruler", "MessageWin", -- kalarm.
-        "Sxiv", "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
-        "Wpa_gui", "veromix", "xtightvncviewer"},
-
-        -- Note that the name property shown in xprop might be set slightly after creation of the client
-        -- and the name shown there might not match defined rules here.
-        name = {"Event Tester" -- xev.
-        },
-        role = {"AlarmWindow", -- Thunderbird's calendar.
-        "ConfigManager", -- Thunderbird's about:config.
-        "pop-up" -- e.g. Google Chrome's (detached) Developer Tools.
-        }
-    },
-    properties = {
-        floating = true 
-    }
-},
-{
-    -- Agregar barras de título a clientes y cuadros de diálogo normales
+}, 
+{-- Agregar barras de título a clientes y cuadros de diálogo normales
     rule_any = {
         type = {"normal", "dialog"}
     },
     properties = {
-        titlebars_enabled = true -- oculatar la barra de las ventanas
+        titlebars_enabled = false -- oculatar la barra de las ventanas
     }
-} -- Set Firefox to always map on the tag named "2" on screen 1.
--- { rule = { class = "Firefox" },
---   properties = { screen = 1, tag = "2" } },
+} 
 }
 -- }}}
 
@@ -301,10 +289,9 @@ client.connect_signal("request::titlebars", function(c)
             layout = wibox.layout.flex.horizontal
         },
         { -- Derecha
-            awful.titlebar.widget.floatingbutton(c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.stickybutton(c),
             awful.titlebar.widget.ontopbutton(c),
+            awful.titlebar.widget.minimizebutton(c), -- miminizar la ventana
+            awful.titlebar.widget.maximizedbutton(c),
             awful.titlebar.widget.closebutton(c),
             layout = wibox.layout.fixed.horizontal()
         },
@@ -320,11 +307,13 @@ client.connect_signal("mouse::enter", function(c)
 end)
 -- cuando la ventan esta seleccionada
 client.connect_signal("focus", function(c)
-    c.border_color = beautiful.border_focus
+    c.opacity = "1"
+    c.border_color = color_azul_one
 end)
 -- cuando la ventan no esta seleccionada
 client.connect_signal("unfocus", function(c)
-    c.border_color = beautiful.border_normal
+    c.opacity = "0.8"
+    c.border_color = color_black
 end)
 -- aplicaciones de ejecucion al inicio del entorno
 awful.util.spawn("picom")--tranparencia
@@ -333,4 +322,4 @@ awful.spawn.with_shell("mpd &")--cargar configuracion de reproductor
 --awful.spawn.with_shell("/usr/bin/pipewire &")--controlador de audio
 --awful.spawn.with_shell("/usr/bin/pipewire-pulse &")--controlador de audio
 --color del listado aplicaciones de segundo plano
-beautiful.bg_systray = "000000"
+beautiful.bg_systray = color_morado_one

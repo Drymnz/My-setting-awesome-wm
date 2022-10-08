@@ -182,10 +182,6 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 -- funcion de configuracion de barra (archivo bar.lua)
 throw_bar(awful, set_wallpaper, tasklist_buttons, wibox, gears, color, taglist_buttons)
--- cargar la configuracion de teclas / atajo de teclas 
-relizar_kyes(modkey, awful, hotkeys_popup, gears)
--- Set keys
-root.keys(globalkeys)
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
     awful.button({}, 3, function()
@@ -211,6 +207,10 @@ end), awful.button({modkey}, 3, function(c)
     })
     awful.mouse.client.resize(c)
 end))
+-- cargar la configuracion de teclas / atajo de teclas 
+relizar_kyes(modkey, awful, hotkeys_popup, gears)
+-- Set keys
+root.keys(globalkeys)
 -- {{{ Rules
 -- Normas a aplicar a nuevos clientes (a través de la señal "gestionar").).
 awful.rules.rules = { --- Todos los clientes coincidirán con esta regla.
