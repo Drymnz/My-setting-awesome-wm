@@ -29,7 +29,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
     awful.key(
         {modkey, modkey_shift}, "s", 
         function()
-        awful.spawn.with_shell("scrot -s &")
+        awful.spawn.with_shell("scrot -s -f ~/%Y-%m-%d-%T-screenshot.png && xclip -selection clipboard -t image/png $(ls $HOME/ | grep screenshot.png | tr '\n' ' ' | awk '{print pwd $NF}')")
         end
     ,{
         description = "Captura de pantalla en area",group = "Captura de pantalla"

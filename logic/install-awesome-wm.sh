@@ -12,7 +12,7 @@ pkg_terminal="alacritty"
 #El escritorio
 pkg_awesome="awesome"
 #Para captura de pantalla
-pkg_scrot="scrot"
+pkg_scrot="scrot xclip"
 #Navegador
 pkg_navegador="firefox"
 #lanzador de aplicacioens

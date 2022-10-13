@@ -52,7 +52,7 @@ function throw_bar(awful,set_wallpaper,tasklist_buttons,wibox,gears,color,taglis
                 fg_empty = color_white,
                 bg_focus = color_naranja_one , -- cuando esta enfoca/tu posicion la mesa de trabajo
                 fg_focus = color_white,
-                bg_occupied = color_morado_one, -- cuando esta ocupada pero no esta seleccionada la mesa de trabajo
+                bg_occupied = color_rojo_one, -- cuando esta ocupada pero no esta seleccionada la mesa de trabajo
                 fg_occupied = color_white
             },
             buttons = taglist_buttons
