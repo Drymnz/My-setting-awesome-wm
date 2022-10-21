@@ -145,6 +145,7 @@ end), awful.button({}, 5, function()
     awful.client.focus.byidx(-1)
 end))
 -- Distancia entre laterales
+beautiful.useless_gap = 15
 awful.screen.connect_for_each_screen(function(s)
     s.padding = 15 -- entre la ventan aun siendo no siendo tile
 end)

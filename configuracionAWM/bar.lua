@@ -13,7 +13,7 @@ function throw_bar(awful,set_wallpaper,tasklist_buttons,wibox,gears,color,taglis
             widget = wibox.widget.textbox
         }
         --uso de cpu
-        mostra_cpu_user = awful.widget.watch('bash -c "echo $[100-$(vmstat 1 2|tail -1|awk \'{print $15}\')]"', 1)
+        mostra_cpu_user = awful.widget.watch('bash -c "top -b -n1 | grep %Cpu | awk \'{print $2 + $4}\'"', time_update)
         porcentaje_cpu = wibox.widget{
             markup = '%--',
             align  = 'center',

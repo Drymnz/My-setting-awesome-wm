@@ -1,7 +1,4 @@
-awful.util.spawn("cp $HOME/.config/awesome/styles/Basic/rc.lua $HOME/.config/awesome/rc.lua")
-            awful.util.spawn("cp $HOME/.config/awesome/styles/Basic/bar.lua $HOME/.config/awesome/bar.lua")
-            awful.util.spawn("cp $HOME/.config/awesome/styles/Basic/color.lua $HOME/.config/awesome/color.lua")
-            awesome.restart* {
+* {
     BG:    #EDFEFE;
     BGA:   #DEEFEF;
     FG:    #303030;

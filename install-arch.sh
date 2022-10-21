@@ -44,5 +44,5 @@ then
     #Solicitar para instalar paquetes Vulkan OpenGL Mesa Otros
     instalacion_gpu_game
     #Cargar fuentes de microsfot
-    install_extends_fonts_microsoft
+    ##install_extends_fonts_microsoft
 fi
