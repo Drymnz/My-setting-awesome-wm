@@ -13,6 +13,8 @@ pkg_terminal="alacritty"
 pkg_awesome="awesome"
 #Para captura de pantalla
 pkg_scrot="scrot xclip"
+#Para tamaño de pantal 
+pkg_configuracion_pantalla="lxrandr"
 #Navegador
 pkg_navegador="firefox"
 #lanzador de aplicacioens
@@ -39,7 +41,7 @@ sudo="sudo"
 need="--needed"
 
 #Listado de paquetes
-pkg_requisitos="${pkg_xorg}  ${pkg_terminal} ${pkg_scrot} ${pkg_polkit} ${pkg_navegador} ${pkg_rofi} ${pkg_picom}"
+pkg_requisitos="${pkg_xorg}  ${pkg_terminal} ${pkg_scrot} ${pkg_configuracion_pantalla} ${pkg_polkit} ${pkg_navegador} ${pkg_rofi} ${pkg_picom}"
 pkg_controladores="${pkg_mac}  ${pkg_iphone} ${pkg_usb} ${pkg_exfast} ${pkg_ntfs} ${pkg_android} "
 pkg_herramientas_usuario="${pkg_mpd} ${pkg_gestor_con} ${pkg_gestor_energia} ${pkg_gestor_disco} "
 #Variable de instalacion

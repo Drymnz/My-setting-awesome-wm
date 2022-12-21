@@ -45,4 +45,5 @@ then
     instalacion_gpu_game
     #Cargar fuentes de microsfot
     ##install_extends_fonts_microsoft
+    install_yay
 fi

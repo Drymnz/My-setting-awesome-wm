@@ -1,4 +1,12 @@
-function relizar_kyes(modkey, awful, hotkeys_popup, gears)
+local menubar = require("menubar")
+
+--Configuracion de estilo del lanzador
+menubar.menu_gen.all_menu_dirs = { "/usr/share/applications/", "/usr/local/share/applications", "/home/eddie/.local/share/applications" }
+
+-- Configuración de la barra de menú
+menubar.utils.terminal = "alacritty" -- Configurar el terminal para aplicaciones que lo requieran
+
+function relizar_kyes(modkey, awful, hotkeys_popup, gears,terminal)
     -- {{{ Key bindings mas informacion (https://awesomewm.org/apidoc/input_handling/awful.key.html)
     modkey_alt = "Mod1" -- boton ALT
     modkey_control = "Control"
@@ -141,16 +149,10 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears)
     -- Menubar
     awful.key(
         {modkey}, "p", function()
-        awful.spawn.with_shell("~/.config/awesome/rofi/menu &")
-        --awful.screen.focused().mypromptbox:run()
+            menubar.show()
+        --awful.spawn.with_shell("~/.config/awesome/rofi/menu &")
     end, {
         description = "Ver el lanzador en barra",group = "Lanzador"
-    }),
-    awful.key(
-        {modkey,modkey_alt}, "p", function()
-        awful.spawn.with_shell("~/.config/awesome/rofi/powermenu &")
-    end, {
-        description = "Menu de power",group = "Power"
     })
 )
     clientkeys = gears.table.join(

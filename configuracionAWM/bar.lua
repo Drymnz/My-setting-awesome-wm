@@ -1,32 +1,10 @@
 
-function throw_bar(awful,set_wallpaper,tasklist_buttons,wibox,gears,color,taglist_buttons)
+local power = require("widget-drymnz.power")
+local info = require("widget-drymnz.informacion-sistema")
+
+function throw_bar(awful,set_wallpaper,tasklist_buttons,wibox,gears,taglist_buttons)
 
     awful.screen.connect_for_each_screen(function(s)
-        -- widget personales(https://awesomewm.org/doc/api/classes/wibox.widget.textbox.html)
-        time_update = 2
-        --uso de ram
-        mostra_men_user = awful.widget.watch('bash -c "free -m | grep Mem | awk \'{print $3}\'"', time_update)
-        text_memoria = wibox.widget{
-            markup = ' MB ',
-            align  = 'center',
-            valign = 'center',
-            widget = wibox.widget.textbox
-        }
-        --uso de cpu
-        mostra_cpu_user = awful.widget.watch('bash -c "top -b -n1 | grep %Cpu | awk \'{print $2 + $4}\'"', time_update)
-        porcentaje_cpu = wibox.widget{
-            markup = '%--',
-            align  = 'center',
-            valign = 'center',
-            widget = wibox.widget.textbox
-        }
-        --espacio en blando
-        spec_men_cpu = wibox.widget{
-            markup = ' MB CPU :',
-            align  = 'center',
-            valign = 'center',
-            widget = wibox.widget.textbox
-        }
         -- Fondo de pantalla
         set_wallpaper(s)
         -- Cada pantalla tiene su propia tabla de etiquetas.
@@ -101,7 +79,7 @@ function throw_bar(awful,set_wallpaper,tasklist_buttons,wibox,gears,color,taglis
             layout = wibox.layout.align.horizontal,
             { -- iquierda widgets
                 layout = wibox.layout.fixed.horizontal,
-                s.mytaglist,
+                s.mytaglist
             },
             s.mytasklist, -- Widget medio listado de aplicaciones abiertas
             --- {{{ Volume Indicator
@@ -112,11 +90,14 @@ function throw_bar(awful,set_wallpaper,tasklist_buttons,wibox,gears,color,taglis
                 }, 
                 -- las terea en segundo plano
                 wibox.widget.textclock('%B %d -- %H:%M --'), -- Crear un widget de reloj de texto (https://awesomewm.org/apidoc/widgets/wibox.widget.textclock.html)
-                -- uso de memoria          
-                mostra_men_user,
-                spec_men_cpu,
-                mostra_cpu_user,
-                porcentaje_cpu,
+                -- informacino de sistema  
+                info(4),       
+                info(3),
+                info(1),
+                info(2),
+                power,
+                -- default
+                --logout_menu_widget(),
                 s.mylayoutbox, -- este es el de como sera ordenado las ventanas      
             }
         }

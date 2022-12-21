@@ -11,7 +11,6 @@ local wibox = require("wibox")
 local beautiful = require("beautiful")
 -- Biblioteca de notificaciones
 local naughty = require("naughty")
-local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 -- Habilite el widget de ayuda de teclas rápidas para VIM y otras aplicaciones
 -- cuando se abre un cliente con un nombre coincidente:
@@ -85,13 +84,19 @@ myawesomemenu = {
 --Listado de app del menu
 beautiful.menu_height = 20
 beautiful.menu_width = 200
+
+beautiful.menu_border_color	= color_white
+beautiful.menu_border_width	 = 1
+
 beautiful.menu_bg_normal = color_black
 beautiful.menu_fg_normal = color_white
-beautiful.menu_bg_focus = color_azul_one
+beautiful.menu_bg_focus = color_white
 beautiful.menu_fg_focus = color_black
+
 navegadores_internet = {
     {"Fire-Fox", "firefox"}
 }
+
 mymainmenu = awful.menu({
     items = {
         {"awesome", myawesomemenu, beautiful.awesome_icon}, 
@@ -175,7 +180,7 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 -- }}}
 -- funcion de configuracion de barra (archivo bar.lua)
-throw_bar(awful, set_wallpaper, tasklist_buttons, wibox, gears, color, taglist_buttons)
+throw_bar(awful, set_wallpaper, tasklist_buttons, wibox, gears, taglist_buttons)
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
     awful.button({}, 3, function()
@@ -203,7 +208,7 @@ end), awful.button({modkey}, 3, function(c)
 end))
 -- }}}
 -- cargar la configuracion de teclas / atajo de teclas 
-relizar_kyes(modkey, awful, hotkeys_popup, gears)
+relizar_kyes(modkey, awful, hotkeys_popup, gears,terminal)
 -- Set keys
 root.keys(globalkeys)
 -- }}}
@@ -226,15 +231,6 @@ awful.rules.rules = { --- Todos los clientes coincidirán con esta regla.
     }
 },
 {
-    --NOTA ESTE ES UN EJEMPLO DE UNA REGLA UNA FORMA DE DECIR COMOQUIERE QUE 
-    -- SE ABRA SIEMPRE ESTA APLICACION (https://awesomewm.org/doc/api/libraries/awful.rules.html#)
-    --[[ rule = { 
-        name = "MPlayer" --app
-    },
-    properties = { -- propiedades alteradas (https://awesomewm.org/doc/api/classes/client.html )
-        floating = true 
-        screen = 1, tag = "2"-- Ejemplo de denomiar aplicaciones en las pantalla 
-    } ]]
 }, 
 {-- Agregar barras de título a clientes y cuadros de diálogo normales
     rule_any = {
@@ -316,6 +312,7 @@ client.connect_signal("unfocus", function(c)
     c.opacity = "0.8"
     c.border_color = color_black
 end)
+-- }}}
 -- aplicaciones de ejecucion al inicio del entorno
 awful.util.spawn("picom")--tranparencia
 awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1 &")--lanzador de ventana para permisos

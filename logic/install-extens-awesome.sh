@@ -44,6 +44,16 @@ function install_extends_fonts_microsoft(){
     cd ${pwd_temp}
 }
 
+function install_yay(){
+    pwd_temp=${pwd}
+    clear
+    mkdir -p ${dir_gits}/Yay
+    git clone https://aur.archlinux.org/yay-bin.git ${dir_gits}/Yay
+    cd ${dir_gits}/Yay
+    makepkg -si
+    cd ${pwd_temp}
+}
+
 function install_extends(){
     mkdir -p "$HOME"/.local/share/keyrings
     sudo pacman -S --needed ${instar_extends} --noconfirm
