@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 pkg_gpu="0"
+pkg_mesa="mesa lib32-mesa"
 
 function instalacion_gpu(){
     echo "¿Desea instalar un controlador grafico? [S/n]"
@@ -12,22 +13,22 @@ function instalacion_gpu(){
             read -r -p "Seleccion una opcion(default 1): " opcio
             case $opcio in
                 [1])
-                    pkg_gpu='xf86-video-intel mesa lib32-mesa'
+                    pkg_gpu="xf86-video-intel ${pkg_mesa}"
                 ;;
                 
                 [2])
-                    pkg_gpu='xf86-video-amdgpu xf86-video-ati mesa lib32-mesa'
+                    pkg_gpu="xf86-video-amdgpu xf86-video-ati ${pkg_mesa}"
                 ;;
                 
                 [3])
-                    pkg_gpu='nvidia nvidia-settings nvidia-utils'
+                    pkg_gpu="nvidia nvidia-settings nvidia-utils ${pkg_mesa}"
                 ;;
                 
                 [4])
                     pkg_gpu="0"
                 ;;
                 [*])
-                    pkg_gpu='xf86-video-intel mesa lib32-mesa'
+                    pkg_gpu="xf86-video-intel ${pkg_mesa}"
                 ;;
             esac
     fi

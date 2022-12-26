@@ -17,8 +17,6 @@ pkg_scrot="scrot xclip"
 pkg_configuracion_pantalla="lxrandr"
 #Navegador
 pkg_navegador="firefox"
-#lanzador de aplicacioens
-pkg_rofi="rofi"
 #Transparencia
 pkg_picom="picom"
 #Controladores
@@ -41,7 +39,7 @@ sudo="sudo"
 need="--needed"
 
 #Listado de paquetes
-pkg_requisitos="${pkg_xorg}  ${pkg_terminal} ${pkg_scrot} ${pkg_configuracion_pantalla} ${pkg_polkit} ${pkg_navegador} ${pkg_rofi} ${pkg_picom}"
+pkg_requisitos="${pkg_xorg}  ${pkg_terminal} ${pkg_scrot} ${pkg_configuracion_pantalla} ${pkg_polkit} ${pkg_navegador} ${pkg_picom}"
 pkg_controladores="${pkg_mac}  ${pkg_iphone} ${pkg_usb} ${pkg_exfast} ${pkg_ntfs} ${pkg_android} "
 pkg_herramientas_usuario="${pkg_mpd} ${pkg_gestor_con} ${pkg_gestor_energia} ${pkg_gestor_disco} "
 #Variable de instalacion
