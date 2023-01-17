@@ -30,7 +30,7 @@ pkg_dvd="udftools syslinux"
 #Manejador de fichero
 pkg_file_manger="thunar thunar-volman thunar-media-tags-plugin thunar-archive-plugin"
 #Gestor de escritrorios
-pkg_sddm="sddm sddm-kcm"
+pkg_sddm="sddm"
 #Reproductor de musica en terminal
 pkg_mpd="mpd mpc ncmpcpp"
 #comandos de pacman 
