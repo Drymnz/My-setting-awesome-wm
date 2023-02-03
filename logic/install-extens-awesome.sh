@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #Programas extras
-pkg_video_app="parole gst-libav"
+pkg_video_app="totem gst-libav"
 pkg_musci_view="lollypop"
 pkg_imagenes_app="eog"
 pkg_edit_text="mousepad"
