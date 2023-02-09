@@ -61,7 +61,7 @@ function copiar_configuraracion(){
         mkdir -p "$HOME"/.config/awesome
         mkdir -p "$HOME"/.ncmpcpp
         mkdir -p "$HOME"/.mpd
-        echo "Copiando la configuracion"
+        echo "Copiando la configuracion parar awesome"
         cp -r /etc/xdg/awesome/rc.lua "$HOME"/.config/awesome/rc.lua
         cp -r /usr/share/doc/alacritty/example/alacritty.yml "$HOME"/.config/alacritty/alacritty.yml
         cp -r configuracionAWM/* "$HOME"/.config/awesome
@@ -72,6 +72,23 @@ function copiar_configuraracion(){
         systemctl enable sddm.service
         sudo mkdir -p /etc/sddm.conf.d
         sudo cp -r configuracionSession/* /etc/sddm.conf.d
+        echo "Copiando la configuracion de pacman"
+        sudo cp -r configuracionPacman/* /etc/pacman.conf
+
+        #Instalar paquetes para jugar en linux
+        echo "¿Desea bloquer actualizaciones de kernel? [S/n]"
+        echo "  "
+        echo "Nota: Es bueno bloquear si usas driver privativos, y tambien"
+        echo "te ahoras la posibilidad de que se dañe linux"
+        echo "siempre me pasaba con las distro despues de unas actualizaciones"
+        echo "  "
+        read -r  start_install
+        if [[ "${start_install}" == "s" ]] || [[ "${start_install}" == "S" ]]
+        then
+            sudo tee -a /etc/pacman.conf >>> "IgnorePkg   = linux linux-hardened linux-lts linux-zen linux-xanmod-bin"
+            sudo tee -a /etc/pacman.conf >>> "IgnorePkg   = linux-api-headers linux-firmware linux-firmware-whence"
+            
+        fi
 }
 
 function install-awesome-wm-start() {
