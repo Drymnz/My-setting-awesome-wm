@@ -54,3 +54,18 @@ function install_extends(){
     mkdir -p "$HOME"/.local/share/keyrings
     sudo pacman -S --needed ${instar_extends} --noconfirm
 }
+
+install_extends
+
+#Instalar paquetes para jugar en linux
+
+clear 
+
+echo "La siguiente instalarcion requiere yay ¿Lo tienes? [S/n]"
+read -r  start_install
+if [[ "${start_install}" == "n" ]] || [[ "${start_install}" == "N" ]]
+then
+    install_yay
+fi
+
+install_extends_fonts_microsoft

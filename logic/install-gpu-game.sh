@@ -72,3 +72,5 @@ function instalacion_gpu_game(){
     # si escojigo una grafica instala sino nada
     ! [[ "${pkg_gpu_game}" == "0" ]] && sudo pacman -S --needed ${pkg_gpu_game}
 }
+
+instalacion_gpu_game

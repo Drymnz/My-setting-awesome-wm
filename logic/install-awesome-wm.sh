@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-#Importa las extenciones
-source ./logic/install-extens-awesome.sh
 
 #Herramientas para awesome 
 pkg_xorg="xorg xorg-xinit xorg-xinput"
@@ -55,24 +53,6 @@ function solicitu_permisos(){
 
 }
 
-function instalacion_awesome-wm(){
-    ##Instar variable 
-    solicitu_permisos
-    sudo pacman -Syyu --noconfirm
-    ${instalar_pkg_uno}
-    ##Escritorio
-    solicitu_permisos
-    ${sudo} pacman -S --needed ${pkg_awesome} --noconfirm
-    ##Gestor de session
-    solicitu_permisos
-    ${sudo} pacman -S --needed ${pkg_sddm} --noconfirm
-    ##Las extenciones
-    install_extends
-    ##Gestor de archivos
-    solicitu_permisos
-    ${sudo} pacman -S --needed ${pkg_file_manger} --noconfirm
-}
-
 #Copiar la configuracion
 function copiar_configuraracion(){
         echo "Creando carpetas"
@@ -84,14 +64,31 @@ function copiar_configuraracion(){
         echo "Copiando la configuracion"
         cp -r /etc/xdg/awesome/rc.lua "$HOME"/.config/awesome/rc.lua
         cp -r /usr/share/doc/alacritty/example/alacritty.yml "$HOME"/.config/alacritty/alacritty.yml
-        echo "Copiando la configuracion"
         cp -r configuracionAWM/* "$HOME"/.config/awesome
         cp -r configuracionAlacritty/* "$HOME"/.config/alacritty
         cp -r configuracionMpd/* "$HOME"/.mpd
         cp -r configuracionNcmpcpp/* "$HOME"/.ncmpcpp
-        systemctl enable sddm.service
         echo "Copiando la configuracion de sddm"
-        solicitu_permisos
+        systemctl enable sddm.service
         sudo mkdir -p /etc/sddm.conf.d
         sudo cp -r configuracionSession/* /etc/sddm.conf.d
 }
+
+function install-awesome-wm-start() {
+    ##Actualizar paquetes
+    solicitu_permisos
+    sudo pacman -Syyu --noconfirm
+    ##Controladores y paquetes para usar la configuracion awesome
+    ${instalar_pkg_uno}
+    ##Escritorio
+    solicitu_permisos
+    ${sudo} pacman -S --needed ${pkg_awesome} --noconfirm
+    ##Gestor de session
+    solicitu_permisos
+    ${sudo} pacman -S --needed ${pkg_sddm} --noconfirm
+    ##Gestor de archivos
+    solicitu_permisos
+    ${sudo} pacman -S --needed ${pkg_file_manger} --noconfirm
+}
+
+install-awesome-wm-start

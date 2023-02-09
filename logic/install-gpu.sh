@@ -36,3 +36,5 @@ function instalacion_gpu(){
     ! [[ "${pkg_gpu}" == "0" ]] && sudo pacman -S --needed ${pkg_gpu} --noconfirm
 }
 
+instalacion_gpu
+
