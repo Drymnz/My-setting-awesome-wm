@@ -18,7 +18,7 @@ pkg_navegador="firefox"
 #Transparencia
 pkg_picom="picom"
 #Controladores
-pkg_android="android-tools gvfs-mtp"
+pkg_android="android-tools gvfs-mtp "
 pkg_ntfs="ntfs-3g gvfs-nfs gvfs-smb smartmontools"
 pkg_exfast="exfat-utils fatresize"
 pkg_usb="usbutils usb_modeswitch gvfs usbmuxd"
@@ -37,11 +37,8 @@ sudo="sudo"
 need="--needed"
 
 #Listado de paquetes
-pkg_requisitos="${pkg_xorg}  ${pkg_terminal} ${pkg_scrot} ${pkg_configuracion_pantalla} ${pkg_polkit} ${pkg_navegador} ${pkg_picom}"
+pkg_requisitos="${pkg_xorg}  ${pkg_terminal} ${pkg_scrot} ${pkg_configuracion_pantalla} ${pkg_polkit} ${pkg_navegador} ${pkg_picom} ${pkg_mpd}"
 pkg_controladores="${pkg_mac}  ${pkg_iphone} ${pkg_usb} ${pkg_exfast} ${pkg_ntfs} ${pkg_android} "
-pkg_herramientas_usuario="${pkg_mpd} ${pkg_gestor_con} ${pkg_gestor_energia} ${pkg_gestor_disco} "
-#Variable de instalacion
-instalar_pkg_uno="${sudo} pacman -S ${need} ${pkg_requisitos} ${pkg_controladores} ${pkg_herramientas_usuario}  ${no_confirmar} "
 
 function solicitu_permisos(){
     clear
@@ -95,7 +92,9 @@ function install-awesome-wm-start() {
     solicitu_permisos
     sudo pacman -Syyu --noconfirm
     ##Controladores y paquetes para usar la configuracion awesome
-    ${instalar_pkg_uno}
+    ${sudo} pacman -S --needed ${pkg_requisitos} --noconfirm
+    ${sudo} pacman -S --needed ${pkg_controladores} --noconfirm
+    ${sudo} pacman -S --needed ${pkg_herramientas_usuario} --noconfirm
     ##Escritorio
     solicitu_permisos
     ${sudo} pacman -S --needed ${pkg_awesome} --noconfirm
