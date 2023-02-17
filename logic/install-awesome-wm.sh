@@ -85,9 +85,8 @@ function copiar_configuraracion(){
         read -r  start_install
         if [[ "${start_install}" == "s" ]] || [[ "${start_install}" == "S" ]]
         then
-            sudo tee -a /etc/pacman.conf >>> "IgnorePkg   = linux linux-hardened linux-lts linux-zen linux-xanmod-bin"
-            sudo tee -a /etc/pacman.conf >>> "IgnorePkg   = linux-api-headers linux-firmware linux-firmware-whence"
-            
+            sudo tee -a /etc/pacman.conf '>>>' "IgnorePkg   = linux linux-hardened linux-lts linux-zen linux-xanmod-bin"
+            sudo tee -a /etc/pacman.conf '>>>' "IgnorePkg   = linux-api-headers linux-firmware linux-firmware-whence"
         fi
 }
 
