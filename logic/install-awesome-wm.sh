@@ -109,3 +109,4 @@ function install-awesome-wm-start() {
 }
 
 install-awesome-wm-start
+copiar_configuraracion
