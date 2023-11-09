@@ -52,41 +52,49 @@ function solicitu_permisos(){
 
 }
 
+## Mostrar y ejecutar
+function mostrar_ejecutar(){
+    echo "$1" 
+    $1
+}
+
 #Copiar la configuracion
 function copiar_configuraracion(){
-        echo "Creando carpetas"
-        mkdir -p "$HOME"/.config
-        mkdir -p "$HOME"/.config/alacritty
-        mkdir -p "$HOME"/.config/awesome
-        mkdir -p "$HOME"/.ncmpcpp
-        mkdir -p "$HOME"/.mpd
+        echo "Crear carpetas"
+        mostrar_ejecutar "mkdir -p "$HOME"/.config"
+        mostrar_ejecutar "mkdir -p "$HOME"/.config/alacritty"
+        mostrar_ejecutar "mkdir -p "$HOME"/.config/awesome"
+        mostrar_ejecutar "mkdir -p "$HOME"/.ncmpcpp"
+        mostrar_ejecutar "mkdir -p "$HOME"/.ncmpcpp/lyrics"
+        mostrar_ejecutar "mkdir -p "$HOME"/.mpd"
+        mostrar_ejecutar "mkdir -p "$HOME"/.mpd/playlists"
+        mostrar_ejecutar "mkdir -p "$HOME"/Music"
         echo "Copiando la configuracion parar awesome"
         ##Copiando las configuraciones predeterminadas 
-        cp -r /etc/xdg/awesome/rc.lua "$HOME"/.config/awesome/rc.lua
-        cp -r /usr/share/doc/alacritty/example/alacritty.yml "$HOME"/.config/alacritty/alacritty.yml
-        cp -r /etc/nanorc "$HOME"/.config/nano/nanorc
+        mostrar_ejecutar "mkdir -p "$HOME"/.config" "cp -r /etc/xdg/awesome/rc.lua "$HOME"/.config/awesome/rc.lua"
+        mostrar_ejecutar "cp -r /usr/share/doc/alacritty/example/alacritty.yml "$HOME"/.config/alacritty/alacritty.yml"
+        mostrar_ejecutar "cp -r /etc/nanorc "$HOME"/.config/nano/nanorc"
         ##Copiando las configuraciones personalizadas
-        cp -r configuracionAWM/* "$HOME"/.config/awesome
-        cp -r configuracionAlacritty/* "$HOME"/.config/alacritty
-        cp -r configuracionMpd/* "$HOME"/.mpd
-        cp -r configuracionNcmpcpp/* "$HOME"/.ncmpcpp
+        mostrar_ejecutar "cp -r configuracionAWM/* "$HOME"/.config/awesome"
+        mostrar_ejecutar "cp -r configuracionAlacritty/* "$HOME"/.config/alacritty"
+        mostrar_ejecutar "cp -r configuracionMpd/* "$HOME"/.mpd"
+        mostrar_ejecutar "cp -r configuracionNcmpcpp/* "$HOME"/.ncmpcpp"
+        mostrar_ejecutar "cp -r Music/* "$HOME"/Music"
 
         echo "Copiando la configuracion de nano"
-        cp -r configuracionNano/* "$HOME"/.config/nano/nanorc
-
-        echo "Copiando la configuracion de pacman"
-        sudo cp -r configuracionPacman/* /etc/pacman.conf
+        mostrar_ejecutar "cp -r configuracionNano/* "$HOME"/.config/nano/nanorc"
 
         #configuraciones de terminal
         echo "Copiando la configuracion de bash"
-        bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
-        cp -r configuracionBash/.bashrc "$HOME"/
+        mostrar_ejecutar "bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)""
+        mostrar_ejecutar "cp -r configuracionBash/.bashrc "$HOME"/"
 
         ##Configuraciones del gestor de ventanas
-        sudo systemctl enable sddm.service
+        mostrar_ejecutar "sudo systemctl enable sddm.service"
         echo "Copiando la configuracion de sddm"
-        sudo mkdir -p /etc/sddm.conf.d
-        sudo cp -r configuracionSession/* /etc/sddm.conf.d
+        mostrar_ejecutar "sudo mkdir -p /etc/sddm.conf.d"
+        mostrar_ejecutar "sudo cp -r configuracionSession/* /etc/sddm.conf.d"
+        mostrar_ejecutar "mpc update"
 
         #Instalar paquetes para jugar en linux
         echo "  "
@@ -101,8 +109,7 @@ function copiar_configuraracion(){
         read -r  start_install
         if [[ "${start_install}" == "s" ]] || [[ "${start_install}" == "S" ]]
         then
-            sudo tee -a /etc/pacman.conf '>>>' "IgnorePkg   = linux linux-hardened linux-lts linux-zen linux-xanmod-bin"
-            sudo tee -a /etc/pacman.conf '>>>' "IgnorePkg   = linux-api-headers linux-firmware linux-firmware-whence"
+            mostrar_ejecutar "sudo cp -r configuracionPacman/* /etc/pacman.conf"
         fi
 }
 
