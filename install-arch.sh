@@ -7,7 +7,7 @@ set +x
 clear 
 
 echo "¿Desea iniciar la instalacion driver de video? [S/n]"
-read -r  start_install
+read -r start_install
 if [[ "${start_install}" == "s" ]] || [[ "${start_install}" == "S" ]]
 then
     ##Persimisos
@@ -16,13 +16,12 @@ then
     source ./logic/install-gpu.sh
 fi
 
-
 #Instalar awesome
 
 clear 
 
 echo "¿Desea iniciar la instalacion Awesome con sus configuraciones? [S/n]"
-read -r  start_install
+read -r start_install
 if [[ "${start_install}" == "s" ]] || [[ "${start_install}" == "S" ]]
 then
     ##Persimisos
@@ -36,13 +35,12 @@ then
     source ./logic/install-extens-awesome.sh
 fi
 
-
 #Instalar paquetes para jugar en linux
 
 clear 
 
 echo "¿Desea iniciar la instalacion paquetes para jugar en linux? [S/n]"
-read -r  start_install
+read -r start_install
 if [[ "${start_install}" == "s" ]] || [[ "${start_install}" == "S" ]]
 then
     ##Persimisos
