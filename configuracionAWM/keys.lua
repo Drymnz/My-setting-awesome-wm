@@ -12,6 +12,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears,terminal)
     modkey_control = "Control"
     modkey_shift = "Shift"
     modkey_tab = "Tab"
+    powerDisplay = true
     -- funciones de ayuda
     function miminizar(c)
         c.maximized = not c.maximized
@@ -54,7 +55,98 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears,terminal)
     end, {
         description = "Anterior Siguiente ventana",group = "Ventana"
     }),
+    -- brillo
+    awful.key({ }, "XF86MonBrightnessDown", function ()
+        awful.spawn("brightnessctl set 3%-")
+    end,
+    {
+        description = "disminuir brillo", group = "Control Brillo"
+    }),
+    awful.key(
+        { }, 
+        "XF86MonBrightnessUp", 
+        function ()
+            awful.spawn("brightnessctl set 3%+")
+        end,
+    {
+        description = "aumentar brillo", group = "Control Brillo"
+    }),
+    awful.key(
+        {  },
+        "XF86ScreenSaver",
+        function ()
+            local estado_actual = awful.util.pread("brightnessctl get")
+            if estado_actual == "0" then
+                awful.spawn("brightnessctl set +10%")
+            else
+                awful.spawn("brightnessctl set 0%")
+            end
+        end,
+        {
+            description = "apagar pantalla", group = "Control Brillo"
+        }
+    ),
+    -- vol
+    awful.key({ }, "XF86AudioLowerVolume", function ()
+        awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%")
+    end,
+    {
+        description = "disminuir vol", group = "Control Vol"
+    }),
+    awful.key({ }, "XF86AudioRaiseVolume", function ()
+        awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +3%")
+    end,
+    {
+        description = "aumentar vol", group = "Control Vol"
+    }),
+    awful.key({ }, "XF86AudioMute", function ()
+        awful.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+    end,
+    {
+        description = "mute vol", group = "Control Vol"
+    }),
+    -- file
+    awful.key(
+        {modkey, modkey_shift}, "f", 
+        function()
+        awful.spawn.with_shell("thunar &")
+        end
+    ,{
+        description = "Abrier carpetas", group = "Ventana"
+    }),
     -- musica
+    awful.key(
+        {}, "XF86AudioNext", 
+        function()
+        awful.spawn.with_shell("mpc next &")
+        end
+    ,{
+        description = "fin + next " , group = "Music"
+    }),
+    awful.key(
+        {}, "XF86AudioPrev", 
+        function()
+        awful.spawn.with_shell("mpc prev &")
+        end
+    ,{
+        description = "fin + prev " , group = "Music"
+    }),
+    awful.key(
+        {}, "XF86AudioStop", 
+        function()
+        awful.spawn.with_shell("mpc stop &")
+        end
+    ,{
+        description = "fin + stop " , group = "Music"
+    }),
+    awful.key(
+        {}, "XF86AudioPlay", 
+        function()
+        awful.spawn.with_shell("mpc toggle &")
+        end
+    ,{
+        description = "fin + play " , group = "Music"
+    }),
     awful.key(
         {modkey_alt, modkey_shift}, "w", 
         function()

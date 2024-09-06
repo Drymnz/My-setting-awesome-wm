@@ -30,6 +30,7 @@ pkg_usb="usbutils usb_modeswitch gvfs usbmuxd"
 pkg_iphone="gvfs gvfs-afc gvfs-google gvfs-gphoto2 gvfs-goa"
 pkg_mac="apparmor"
 pkg_dvd="udftools syslinux"
+pkg_brillo="brightnessctl"
 #Manejador de fichero
 pkg_file_manger="thunar thunar-volman thunar-media-tags-plugin thunar-archive-plugin"
 
@@ -40,7 +41,7 @@ need="--needed"
 
 #Listado de paquetes
 pkg_requisitos="${pkg_xorg}  ${pkg_terminal} ${pkg_scrot} ${pkg_configuracion_pantalla} ${pkg_polkit} ${pkg_navegador} ${pkg_picom} ${pkg_mpd} ${pkg_text}"
-pkg_controladores="${pkg_mac}  ${pkg_iphone} ${pkg_usb} ${pkg_exfast} ${pkg_ntfs} ${pkg_android} "
+pkg_controladores="${pkg_mac}  ${pkg_iphone} ${pkg_usb} ${pkg_exfast} ${pkg_ntfs} ${pkg_android} ${pkg_brillo} "
 
 function solicitu_permisos(){
     
@@ -73,6 +74,7 @@ function copiar_configuraracion(){
         ##Copiando las configuraciones predeterminadas 
         mostrar_ejecutar "mkdir -p "$HOME"/.config" "cp -r /etc/xdg/awesome/rc.lua "$HOME"/.config/awesome/rc.lua"
         mostrar_ejecutar "cp -r /usr/share/doc/alacritty/example/alacritty.yml "$HOME"/.config/alacritty/alacritty.yml"
+        mostrar_ejecutar "cp -r /usr/share/doc/alacritty/example/alacritty.toml "$HOME"/.config/alacritty/alacritty.toml"
         mostrar_ejecutar "cp -r /etc/nanorc "$HOME"/.config/nano/nanorc"
         ##Copiando las configuraciones personalizadas
         mostrar_ejecutar "cp -r configuracionAWM/* "$HOME"/.config/awesome"
