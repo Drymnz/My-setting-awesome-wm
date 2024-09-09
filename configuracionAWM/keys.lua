@@ -87,14 +87,17 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears,terminal)
         }
     ),
     -- vol
-    awful.key({ }, "XF86AudioLowerVolume", function ()
+    awful.key({ }, "XF86AudioLowerVolume", 
+    function ()
         awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%")
-    end,
+    end
+    ,
     {
         description = "disminuir vol", group = "Control Vol"
     }),
-    awful.key({ }, "XF86AudioRaiseVolume", function ()
-        awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +3%")
+    awful.key({ }, "XF86AudioRaiseVolume", 
+    function ()
+            awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +2%")
     end,
     {
         description = "aumentar vol", group = "Control Vol"
