@@ -89,12 +89,18 @@ function throw_bar(awful,set_wallpaper,tasklist_buttons,wibox,gears,taglist_butt
                 wibox.widget.systray {
                 }, 
                 -- las terea en segundo plano
-                wibox.widget.textclock('%B %d -- %H:%M --'), -- Crear un widget de reloj de texto (https://awesomewm.org/apidoc/widgets/wibox.widget.textclock.html)
+                wibox.widget.textclock('%B %d -- %H:%M -- '), -- Crear un widget de reloj de texto (https://awesomewm.org/apidoc/widgets/wibox.widget.textclock.html)
                 -- informacino de sistema  
+                info(7),       
                 info(4),       
                 info(3),
                 info(1),
                 info(2),
+                info(5),
+                info(6),
+                info(9),
+                info(8),
+                info(10),
                 power,
                 -- default
                 --logout_menu_widget(),
