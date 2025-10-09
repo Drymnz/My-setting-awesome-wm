@@ -8,6 +8,7 @@ pkg_xorg="xorg xorg-xinit xorg-xinput"
 pkg_awesome="awesome"
 pkg_terminal="alacritty"
 pkg_polkit="polkit-kde-agent"
+pkg_dark="gtk3 gtk4"
 pkg_sddm="sddm"
 pkg_file_manager="thunar thunar-volman thunar-media-tags-plugin thunar-archive-plugin"
 
@@ -55,8 +56,8 @@ install_awesome_base() {
     # Utilidades básicas
     show_message "Instalando utilidades básicas..."
     sudo pacman -S --needed ${pkg_polkit} ${pkg_screenshot} ${pkg_display} \
-                           ${pkg_browser} ${pkg_compositor} ${pkg_audio} \
-                           ${pkg_text_editor} --noconfirm
+    ${pkg_browser} ${pkg_compositor} ${pkg_audio} \
+    ${pkg_text_editor}  ${pkg_dark} --noconfirm
     
     # Preguntar por reproductor de música
     echo ""
@@ -65,6 +66,9 @@ install_awesome_base() {
     if [[ "${install_music,,}" == "s" ]] || [[ -z "$install_music" ]]; then
         show_message "Instalando reproductor de música..."
         sudo pacman -S --needed ${pkg_music} --noconfirm
+        # Solo ejecuta esto UNA VEZ
+        gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+        gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
     fi
     
     show_message "Instalación base de Awesome WM completada"

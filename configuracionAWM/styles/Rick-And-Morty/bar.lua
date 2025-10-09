@@ -1,4 +1,3 @@
-
 local power = require("widget-drymnz.power")
 local info = require("widget-drymnz.informacion-sistema")
 
@@ -85,20 +84,38 @@ function throw_bar(awful,set_wallpaper,tasklist_buttons,wibox,gears,taglist_butt
             --- {{{ Volume Indicator
             { -- derecha widgets
                 layout = wibox.layout.fixed.horizontal,
-                -- mykeyboardlayout, el tecldo 
-                wibox.widget.systray {
-                }, 
-                -- las terea en segundo plano
-                wibox.widget.textclock('%B %d -- %H:%M --'), -- Crear un widget de reloj de texto (https://awesomewm.org/apidoc/widgets/wibox.widget.textclock.html)
-                -- informacino de sistema  
-                info(4),       
-                info(3),
-                info(1),
-                info(2),
+                spacing = 5,
+                wibox.widget.systray(),
+                info("separador"),
+                
+                -- Reloj
+                wibox.widget.textclock('%B %d -- %H:%M --'),
+                info("separador"),
+                
+                -- CPU GHz
+                info("cpu_ghz"),
+                info("espacio"),
+                info("cpu_ghz_label"),
+                info("separador"),
+                
+                -- CPU Porcentaje
+                info("cpu_label"),
+                info("espacio"),
+                info("cpu_porcentaje"),
+                info("cpu_simbolo"),
+                info("separador"),
+                
+                -- RAM
+                info("ram_label"),
+                info("espacio"),
+                info("ram_usado"),
+                info("espacio"),
+                info("ram_mb"),
+                info("separador"),
+                
+                -- Power Menu
                 power,
-                -- default
-                --logout_menu_widget(),
-                s.mylayoutbox, -- este es el de como sera ordenado las ventanas      
+                s.mylayoutbox
             }
         }
     end)

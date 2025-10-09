@@ -328,4 +328,5 @@ awful.spawn.with_shell("nm-applet &")
 --awful.spawn.with_shell("/usr/bin/pipewire &")--controlador de audio
 --awful.spawn.with_shell("/usr/bin/pipewire-pulse &")--controlador de audio
 --color del listado aplicaciones de segundo plano
-beautiful.bg_systray = color_blue_one
+beautiful.bg_systray = color_blue_one-- Activar Num Lock al inicio
+awful.spawn.with_shell("setleds -D +num")
