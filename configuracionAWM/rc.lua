@@ -62,7 +62,8 @@ beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 awful.layout.layouts = {
     -- puede agregar mas si lo desea, mas informacion (https://awesomewm.org/apidoc/libraries/awful.layout.html)
     awful.layout.suit.floating,
-    awful.layout.suit.fair
+    awful.layout.suit.fair,
+    awful.layout.suit.tile.bottom
 }
 
 -- Configuración del menú principal

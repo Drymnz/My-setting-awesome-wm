@@ -65,9 +65,8 @@ apply_configs() {
     # === Nano ===
     if [[ -d "${PROJECT_ROOT}/configuracionNano" ]]; then
         show_message "Copiando configuración de Nano..."
-        mkdir -p "$HOME/.config/nano"
-        cp /etc/nanorc "$HOME/.config/nano/nanorc" 2>/dev/null
-        cp -r "${PROJECT_ROOT}/configuracionNano/"* "$HOME/.config/nano/"
+        sudo mkdir -p /etc/sddm.conf.d
+        sudo cp -r "${PROJECT_ROOT}/configuracionNano/nanorc" /etc/nanorc
         show_message "Configuración de Nano aplicada"
     fi
 
@@ -82,7 +81,7 @@ apply_configs() {
     if [[ -d "${PROJECT_ROOT}/configuracionSession" ]]; then
         show_message "Copiando configuración de SDDM..."
         sudo mkdir -p /etc/sddm.conf.d
-        sudo cp -r "${PROJECT_ROOT}/configuracionSession/"* /etc/sddm.conf.d/
+        sudo cp -r "${PROJECT_ROOT}/configuracionSession/sddm.conf" /etc/sddm.conf.d/sddm.conf
         show_message "Configuración de SDDM aplicada"
     fi
 

@@ -180,17 +180,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears, terminal)
         description = "apagar / encender pantalla",
         group = "brillo"
     }), -- 🧩 Control de layout
-    awful.key({modkey}, "l", function()
-        awful.tag.incmwfact(0.05)
-    end, {
-        description = "aumentar ancho maestro",
-        group = "layout"
-    }), awful.key({modkey}, "h", function()
-        awful.tag.incmwfact(-0.05)
-    end, {
-        description = "disminuir ancho maestro",
-        group = "layout"
-    }), awful.key({modkey, "Shift"}, "h", function()
+    awful.key({modkey, "Shift"}, "h", function()
         awful.tag.incnmaster(1, nil, true)
     end, {
         description = "aumentar clientes maestros",
@@ -253,6 +243,7 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears, terminal)
         description = "intercambiar con el anterior",
         group = "Ventana"
     }), awful.key({modkey, "Control"}, "Return", function(c)
+            awful.layout.set(awful.layout.layouts[#awful.layout.layouts])
         c:swap(awful.client.getmaster())
     end, {
         description = "mover a maestro",
@@ -290,7 +281,9 @@ function relizar_kyes(modkey, awful, hotkeys_popup, gears, terminal)
     end, {
         description = "maximizar horizontalmente",
         group = "client"
-    }))
+    })
+
+)
 
     -- 🔢 Tags (1-9)
     for i = 1, 9 do
