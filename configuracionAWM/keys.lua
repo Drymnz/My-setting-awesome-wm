@@ -1,432 +1,338 @@
 local menubar = require("menubar")
 
---Configuracion de estilo del lanzador
-menubar.menu_gen.all_menu_dirs = { "/usr/share/applications/", "/usr/local/share/applications", "/home/eddie/.local/share/applications" }
+-- 🔧 Definición de modificadores
+local modkey_shift = "Shift"
+local modkey_alt = "Mod1"
+local modkey_control = "Control"
+local modkey_tab = "Tab"
 
--- Configuración de la barra de menú
-menubar.utils.terminal = "alacritty" -- Configurar el terminal para aplicaciones que lo requieran
+-- Configuración de estilo del lanzador
+menubar.menu_gen.all_menu_dirs = {"/usr/share/applications/", "/usr/local/share/applications",
+                                  "/home/eddie/.local/share/applications"}
 
-function relizar_kyes(modkey, awful, hotkeys_popup, gears,terminal)
-    -- {{{ Key bindings mas informacion (https://awesomewm.org/apidoc/input_handling/awful.key.html)
-    modkey_alt = "Mod1" -- boton ALT
-    modkey_control = "Control"
-    modkey_shift = "Shift"
-    modkey_tab = "Tab"
-    powerDisplay = true
-    -- funciones de ayuda
-    function miminizar(c)
-        c.maximized = not c.maximized
-        c:raise()
-    end
+-- Configuración del terminal
+menubar.utils.terminal = "alacritty"
 
-    -- el primer atajo es bueno para ver cules teclas hay establecido
-    globalkeys = gears.table.join(
-    awful.key(
-        {modkey}, "s", hotkeys_popup.show_help, {
-        description = "Ver ayuda",group = "awesome"
-    }), 
-    -- verte en las mesas de trabajo
-    awful.key(
-        {modkey_alt, modkey_control}, "Left", awful.tag.viewprev, {
-        description = "Mover al escritorio izquierdo",group = "Escritorio"
-    }),
-    awful.key(
-        {modkey_alt, modkey_control}, "Right", awful.tag.viewnext, {
-        description = "Mover al escritorio derecha",group = "Escritorio"
-    }),
-    -- captura de pantalla 
-    awful.key(
-        {modkey, modkey_shift}, "s", 
-        function()
-        awful.spawn.with_shell("scrot -s -f ~/%Y-%m-%d-%T-screenshot.png && xclip -selection clipboard -t image/png $(ls $HOME/ | grep screenshot.png | tr '\n' ' ' | awk '{print pwd $NF}')")
-        end
-    ,{
-        description = "Captura de pantalla en area",group = "Captura de pantalla"
-    }),
-    awful.key(
-        {modkey_alt}, modkey_tab, function()
+function relizar_kyes(modkey, awful, hotkeys_popup, gears, terminal)
+    -- {{{ Key bindings (https://awesomewm.org/apidoc/input_handling/awful.key.html)
+
+    globalkeys = gears.table.join( -- 🧩 Sistema y ayuda
+    awful.key({modkey}, "s", hotkeys_popup.show_help, {
+        description = "mostrar ayuda",
+        group = "awesome"
+    }), awful.key({modkey, "Control"}, "r", awesome.restart, {
+        description = "reiniciar awesome",
+        group = "awesome"
+    }), awful.key({modkey, "Shift"}, "#19", awesome.quit, {
+        description = "cerrar sesión",
+        group = "awesome"
+    }), awful.key({modkey, modkey_shift}, "s", function()
+        awful.spawn.with_shell(
+            "scrot -s -f ~/%Y-%m-%d-%T-screenshot.png && xclip -selection clipboard -t image/png $(ls $HOME/ | grep screenshot.png | tr '\n' ' ' | awk '{print pwd $NF}')")
+    end, {
+        description = "Captura de pantalla en area",
+        group = "Captura de pantalla"
+    }), -- 🖥️ Navegación entre tags
+    awful.key({modkey}, "Left", awful.tag.viewprev, {
+        description = "tag anterior",
+        group = "tag"
+    }), awful.key({modkey}, "Right", awful.tag.viewnext, {
+        description = "tag siguiente",
+        group = "tag"
+    }), awful.key({modkey}, "Tab", awful.tag.history.restore, {
+        description = "regresar al tag anterior",
+        group = "tag"
+    }), -- 🪟 Navegación entre clientes
+    awful.key({modkey_alt}, modkey_tab, function()
         awful.client.focus.byidx(1)
     end, {
-        description = "Siguiente ventana",group = "Ventana"
-    }),
-    awful.key(
-        {modkey_alt, modkey_shift}, modkey_tab, function()
-        awful.client.focus.byidx(-1)
+        description = "enfocar siguiente cliente",
+        group = "client"
+    }), -- 🔁 Intercambio de clientes
+    awful.key({modkey, "Shift"}, "j", function()
+        awful.client.swap.byidx(1)
     end, {
-        description = "Anterior Siguiente ventana",group = "Ventana"
-    }),
-    -- brillo
-    awful.key({ }, "XF86MonBrightnessDown", function ()
-        awful.spawn("brightnessctl set 3%-")
-    end,
-    {
-        description = "disminuir brillo", group = "Control Brillo"
-    }),
-    awful.key(
-        { }, 
-        "XF86MonBrightnessUp", 
-        function ()
-            awful.spawn("brightnessctl set 3%+")
-        end,
-    {
-        description = "aumentar brillo", group = "Control Brillo"
-    }),
-    awful.key(
-        {  },
-        "XF86ScreenSaver",
-        function ()
-            local estado_actual = awful.util.pread("brightnessctl get")
-            if estado_actual == "0" then
-                awful.spawn("brightnessctl set +10%")
-            else
-                awful.spawn("brightnessctl set 0%")
-            end
-        end,
-        {
-            description = "apagar pantalla", group = "Control Brillo"
-        }
-    ),
-    -- vol
-    awful.key({ }, "XF86AudioLowerVolume", 
-    function ()
-        awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%")
-    end
-    ,
-    {
-        description = "disminuir vol", group = "Control Vol"
-    }),
-    awful.key({ }, "XF86AudioRaiseVolume", 
-    function ()
-            awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +2%")
-    end,
-    {
-        description = "aumentar vol", group = "Control Vol"
-    }),
-    awful.key({ }, "XF86AudioMute", function ()
-        awful.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")
-    end,
-    {
-        description = "mute vol", group = "Control Vol"
-    }),
-    -- file
-    awful.key(
-        {modkey, modkey_shift}, "f", 
-        function()
-        awful.spawn.with_shell("thunar &")
-        end
-    ,{
-        description = "Abrier carpetas", group = "Ventana"
-    }),
-    -- musica
-    awful.key(
-        {}, "XF86AudioNext", 
-        function()
-        awful.spawn.with_shell("mpc next &")
-        end
-    ,{
-        description = "fin + next " , group = "Music"
-    }),
-    awful.key(
-        {}, "XF86AudioPrev", 
-        function()
-        awful.spawn.with_shell("mpc prev &")
-        end
-    ,{
-        description = "fin + prev " , group = "Music"
-    }),
-    awful.key(
-        {}, "XF86AudioStop", 
-        function()
-        awful.spawn.with_shell("mpc stop &")
-        end
-    ,{
-        description = "fin + stop " , group = "Music"
-    }),
-    awful.key(
-        {}, "XF86AudioPlay", 
-        function()
-        awful.spawn.with_shell("mpc toggle &")
-        end
-    ,{
-        description = "fin + play " , group = "Music"
-    }),
-    awful.key(
-        {modkey_alt, modkey_shift}, "w", 
-        function()
-        awful.spawn.with_shell("mpc  toggle &")
-        end
-    ,{
-        description = "Reproduce cancion / Detiene la cancion", group = "Music"
-    }),
-    awful.key(
-        {modkey_alt, modkey_shift}, "s", 
-        function()
-        awful.spawn.with_shell("mpc next &")
-        end
-    ,{
-        description = "Siguiente cancion" , group = "Music"
-    }),
-    awful.key(
-        {modkey_alt, modkey_shift}, "a", 
-        function()
-        awful.spawn.with_shell("mpc prev &")
-        end
-    ,{
-        description = "Anterior cancion" , group = "Music"
-    }),
-    awful.key(
-        {modkey_alt, modkey_shift}, "x", 
-        function()
-        awful.spawn.with_shell("mpc volume -3 &")
-        end
-    ,{
-        description = "Bajar volumen a la musica" ,  group = "Music"
-    }),
-    awful.key(
-        {modkey_alt, modkey_shift}, "z", 
-        function()
-        awful.spawn.with_shell("mpc volume +3 &")
-        end
-    ,{
-        description = "Subir volumen a la musica" , group = "Music"
-    }),
-    awful.key(
-        {modkey}, "w", function()
+        description = "intercambiar con siguiente",
+        group = "client"
+    }), awful.key({modkey, "Shift"}, "k", function()
+        awful.client.swap.byidx(-1)
+    end, {
+        description = "intercambiar con anterior",
+        group = "client"
+    }), -- 🖥️ Control de pantallas
+    awful.key({modkey, "Control"}, "j", function()
+        awful.screen.focus_relative(1)
+    end, {
+        description = "enfocar siguiente pantalla",
+        group = "screen"
+    }), awful.key({modkey, "Control"}, "k", function()
+        awful.screen.focus_relative(-1)
+    end, {
+        description = "enfocar pantalla anterior",
+        group = "screen"
+    }), -- 🚀 Lanzadores
+    awful.key({modkey}, "Return", function()
+        awful.spawn(menubar.utils.terminal)
+    end, {
+        description = "Abrir terminal",
+        group = "Lanzador"
+    }), awful.key({modkey}, "w", function()
         mymainmenu:show()
     end, {
-        description = "Ver menu",group = "awesome"
-    }),
-     -- Layout manipulation
-    awful.key(
-        {modkey}, modkey_tab, 
-        function()
-        awful.client.focus.history.previous()
-        if client.focus then
-            client.focus:raise()
+        description = "mostrar menú principal",
+        group = "launcher"
+    }), awful.key({modkey}, "r", function()
+        awful.screen.focused().mypromptbox:run()
+    end, {
+        description = "ejecutar comando",
+        group = "launcher"
+    }), awful.key({modkey}, "d", function()
+        menubar.show()
+    end, {
+        description = "mostrar barra de menú",
+        group = "launcher"
+    }), awful.key({modkey, "Shift"}, "f", function()
+        awful.spawn.with_shell("thunar")
+    end, {
+        description = "abrir gestor de archivos (Thunar)",
+        group = "launcher"
+    }), -- 🎚️ Control de volumen
+    awful.key({}, "XF86AudioRaiseVolume", function()
+        awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +5%")
+    end, {
+        description = "subir volumen",
+        group = "audio"
+    }), awful.key({}, "XF86AudioLowerVolume", function()
+        awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%")
+    end, {
+        description = "bajar volumen",
+        group = "audio"
+    }), awful.key({}, "XF86AudioMute", function()
+        awful.spawn("pactl set-sink-mute @DEFAULT_SINK@ toggle")
+    end, {
+        description = "silenciar",
+        group = "audio"
+    }), -- 🎵 Multimedia con mpc (MPD)
+    awful.key({}, "XF86AudioPlay", function()
+        awful.spawn.with_shell("mpc toggle &")
+    end, {
+        description = "reproducir / pausar",
+        group = "music"
+    }), awful.key({}, "XF86AudioNext", function()
+        awful.spawn.with_shell("mpc next &")
+    end, {
+        description = "siguiente canción",
+        group = "music"
+    }), awful.key({}, "XF86AudioPrev", function()
+        awful.spawn.with_shell("mpc prev &")
+    end, {
+        description = "canción anterior",
+        group = "music"
+    }), awful.key({}, "XF86AudioStop", function()
+        awful.spawn.with_shell("mpc stop &")
+    end, {
+        description = "detener reproducción",
+        group = "music"
+    }), awful.key({modkey_alt, modkey_shift}, "o", function()
+        awful.spawn.with_shell("mpc toggle &")
+    end, {
+        description = "Reproduce/Detiene la canción",
+        group = "Music"
+    }), awful.key({modkey_alt, modkey_shift}, "l", function()
+        awful.spawn.with_shell("mpc next &")
+    end, {
+        description = "Siguiente canción",
+        group = "Music"
+    }), awful.key({modkey_alt, modkey_shift}, "k", function()
+        awful.spawn.with_shell("mpc prev &")
+    end, {
+        description = "Anterior canción",
+        group = "Music"
+    }), awful.key({modkey_alt, modkey_shift}, "-", function()
+        awful.spawn.with_shell("mpc volume -3 &")
+    end, {
+        description = "Bajar volumen música",
+        group = "Music"
+    }), awful.key({modkey_alt, modkey_shift}, "+", function()
+        awful.spawn.with_shell("mpc volume +3 &")
+    end, {
+        description = "Subir volumen música",
+        group = "Music"
+    }), -- 🌞 Control de brillo
+    awful.key({}, "XF86MonBrightnessUp", function()
+        awful.spawn("brightnessctl set +5%")
+    end, {
+        description = "subir brillo",
+        group = "brillo"
+    }), awful.key({}, "XF86MonBrightnessDown", function()
+        awful.spawn("brightnessctl set 5%-")
+    end, {
+        description = "bajar brillo",
+        group = "brillo"
+    }), awful.key({}, "XF86ScreenSaver", function()
+        local estado_actual = awful.util.pread("brightnessctl get")
+        if estado_actual == "0" then
+            awful.spawn("brightnessctl set +10%")
+        else
+            awful.spawn("brightnessctl set 0%")
         end
     end, {
-        description = "Ir ventana anterior seleccionada",group = "Ventana"
-    }), -- Standard program
-    awful.key(
-        {modkey}, "Return", function()
-        awful.spawn(terminal)
+        description = "apagar / encender pantalla",
+        group = "brillo"
+    }), -- 🧩 Control de layout
+    awful.key({modkey}, "l", function()
+        awful.tag.incmwfact(0.05)
     end, {
-        description = "Abrier terminal",group = "Lanzador"
-    })-- teclas para manejar el awesomeWM
-    , awful.key(
-        {modkey, modkey_control}, "r", awesome.restart, {
-        description = "Refrescar",group = "awesome"
-    }),
-    awful.key(
-        {modkey}, "space", function()
+        description = "aumentar ancho maestro",
+        group = "layout"
+    }), awful.key({modkey}, "h", function()
+        awful.tag.incmwfact(-0.05)
+    end, {
+        description = "disminuir ancho maestro",
+        group = "layout"
+    }), awful.key({modkey, "Shift"}, "h", function()
+        awful.tag.incnmaster(1, nil, true)
+    end, {
+        description = "aumentar clientes maestros",
+        group = "layout"
+    }), awful.key({modkey, "Shift"}, "l", function()
+        awful.tag.incnmaster(-1, nil, true)
+    end, {
+        description = "disminuir clientes maestros",
+        group = "layout"
+    }), awful.key({modkey}, "space", function()
         awful.layout.inc(1)
     end, {
-        description = "Siguiente ordenamiento de escritorio",group = "escritorio"
-    }), 
-    awful.key(
-        {modkey, modkey_alt}, "space", function()
+        description = "siguiente layout",
+        group = "layout"
+    }), awful.key({modkey, "Shift"}, "space", function()
         awful.layout.inc(-1)
     end, {
-        description = "Anterior ordenamiento de escritorio",group = "escritorio"
-    }), 
-    awful.key(
-        {modkey, modkey_control}, "n", function()
+        description = "layout anterior",
+        group = "layout"
+    }), -- 🔄 Restaurar ventanas minimizadas
+    awful.key({modkey, "Control"}, "n", function()
         local c = awful.client.restore()
-        -- Focus restored cliente
         if c then
             c:emit_signal("request::activate", "key.unminimize", {
                 raise = true
             })
         end
     end, {
-        description = "Restaura las ventanas miminizada",group = "Ventana"
-    }), -- Prompt
-    -- Menubar
-    awful.key(
-        {modkey}, "p", function()
-            menubar.show()
-        --awful.spawn.with_shell("~/.config/awesome/rofi/menu &")
-    end, {
-        description = "Ver el lanzador en barra",group = "Lanzador"
-    })
-)
-    clientkeys = gears.table.join(
-    awful.key(
-        {modkey}, "f", function(c)
+        description = "restaurar minimizada",
+        group = "client"
+    }))
+
+    -- 🎛️ Teclas por cliente
+    clientkeys = gears.table.join(awful.key({modkey, modkey_control}, "f", function(c)
         c.fullscreen = not c.fullscreen
         c:raise()
     end, {
-        description = "Ventana en pantalla completa",group = "Ventana"
-    }), 
-    awful.key(
-        {modkey, modkey_shift}, "c", function(c)
+        description = "pantalla completa",
+        group = "client"
+    }), awful.key({modkey, "Shift"}, "q", function(c)
         c:kill()
     end, {
-        description = "Cerrar ventana",group = "Ventana"
-    }),
-    -- documentacion para la modificacion de ventan (https://awesomewm.org/apidoc/core_components/client.html#Object_properties)
-    awful.key(
-        {modkey}, "Left", 
-        function(c)
+        description = "cerrar ventana",
+        group = "client"
+    }), awful.key({modkey, "Control"}, "space", awful.client.floating.toggle, {
+        description = "alternar flotante",
+        group = "client"
+    }), awful.key({modkey, modkey_control}, "Left", function(c)
+        if awful.client.swap.byidx(1) then
+            c:swap(awful.client.swap.byidx(1))
+        end
+    end, {
+        description = "intercambiar con el siguiente",
+        group = "Ventana"
+    }), awful.key({modkey, modkey_control}, "Right", function(c)
+        if awful.client.swap.byidx(-1) then
+            c:swap(awful.client.swap.byidx(-1))
+        end
+    end, {
+        description = "intercambiar con el anterior",
+        group = "Ventana"
+    }), awful.key({modkey, "Control"}, "Return", function(c)
+        c:swap(awful.client.getmaster())
+    end, {
+        description = "mover a maestro",
+        group = "client"
+    }), awful.key({modkey}, "o", function(c)
+        c:move_to_screen()
+    end, {
+        description = "mover a otra pantalla",
+        group = "client"
+    }), awful.key({modkey}, "t", function(c)
+        c.ontop = not c.ontop
+    end, {
+        description = "mantener encima",
+        group = "client"
+    }), awful.key({modkey}, "n", function(c)
+        c.minimized = true
+    end, {
+        description = "minimizar",
+        group = "client"
+    }), awful.key({modkey}, "m", function(c)
+        c.maximized = not c.maximized
+        c:raise()
+    end, {
+        description = "maximizar",
+        group = "client"
+    }), awful.key({modkey, "Control"}, "m", function(c)
+        c.maximized_vertical = not c.maximized_vertical
+        c:raise()
+    end, {
+        description = "maximizar verticalmente",
+        group = "client"
+    }), awful.key({modkey, "Shift"}, "m", function(c)
+        c.maximized_horizontal = not c.maximized_horizontal
+        c:raise()
+    end, {
+        description = "maximizar horizontalmente",
+        group = "client"
+    }))
+
+    -- 🔢 Tags (1-9)
+    for i = 1, 9 do
+        globalkeys = gears.table.join(globalkeys, awful.key({modkey}, "#" .. i + 9, function()
+            local screen = awful.screen.focused()
+            local tag = screen.tags[i]
+            if tag then
+                if tag.selected then
+                    awful.tag.history.restore()
+                else
+                    tag:view_only()
+                end
+            end
+        end, {
+            description = "ver/toggle tag #" .. i,
+            group = "tag"
+        }), awful.key({modkey, "Shift"}, "#" .. i + 9, function()
+            if client.focus then
+                local tag = client.focus.screen.tags[i]
+                if tag then
+                    client.focus:move_to_tag(tag)
+                    tag:view_only()
+                end
+            end
+        end, {
+            description = "mover y seguir a tag #" .. i,
+            group = "tag"
+        }))
+    end
+end
+
+--[[ -- documentacion para la modificacion de ventan (https://awesomewm.org/apidoc/core_components/client.html#Object_properties)
+        awful.key({modkey}, "Left", function(c)
             if c.maximized then
                 miminizar(c)
                 miminizar(c)
             else
                 miminizar(c)
             end
-                c.width= ((c.width)/2)-15
-                --c:relative_move(0, 0, (c.width)/2, (c.width)/2)--este comando crece
+            c.width = ((c.width) / 2) - 15
+            -- c:relative_move(0, 0, (c.width)/2, (c.width)/2)--este comando crece
         end, {
-        description = "Ajustar ventana a la mita de pantalla izquierda",group = "Ventana"
-    }), awful.key(
-        {modkey}, "Right", function(c)
-        if c.maximized then
-            miminizar(c)
-            miminizar(c)
-        else
-            miminizar(c)
-        end
-        c.x = ((c.width)/2)+15
-        c.width= ((c.width)/2)
-    end, {
-        description = "Ajustar ventana a la mita de pantalla derecha",group = "Ventana"
-    })
-    , 
-     awful.key(
-        {modkey, modkey_control}, "space", awful.client.floating.toggle, {
-        description = "Convertir ventana a flotable",group = "Ventana"
-    }), 
-    awful.key(
-        {modkey, modkey_control}, "Return", function(c)
-        c:swap(awful.client.getmaster())
-    end, {
-        description = "Mover focus a master",group = "Ventana tili"
-    }), 
-    awful.key(
-        {modkey, modkey_control}, "p", function(c)
-            if awful.client.swap.byidx(1) then
-                c:swap(awful.client.swap.byidx(1))
-            end
-    end, {
-        description = "Intercambiar posicion con el siguiente",group = "Ventana tili"
-    }),
-    awful.key(
-        {modkey, modkey_control}, "o", function(c)
-            if awful.client.swap.byidx(-1) then
-                c:swap(awful.client.swap.byidx(-1))
-            end
-    end, {
-        description = "Intercambiar posicion con el anterior",group = "Ventana tili"
-    }),
-    awful.key(
-        {modkey}, "t", function(c)
-        c.ontop = not c.ontop
-    end, {
-        description = "Mantener en la ventana superior",group = "Ventana"
-    }), awful.key(
-        {modkey}, "n", function(c)
-        c.minimized = true
-    end, {
-        description = "Miminizar la ventana",group = "Ventana"
-    }), awful.key(
-        {modkey}, "m", function(c)
-        miminizar(c)
-    end, {
-        description = "(un)maximize",group = "Ventana"
-    }), awful.key(
-        {modkey, modkey_control}, "m", function(c)
-        c.maximized_vertical = not c.maximized_vertical
-        c:raise()
-    end, {
-        description = "(un)maximize vertically (only tili)",group = "Ventana tili"
-    }), awful.key(
-        {modkey, modkey_shift}, "m", function(c)
-        c.maximized_horizontal = not c.maximized_horizontal
-        c:raise()
-    end, {
-        description = "(un)maximize horizontally (only tili)",group = "Ventana tili"
-    })
-    , 
-    --Estilos del entorno
-     awful.key(
-        {modkey, modkey_alt}, "9",
-           function (awesome)
-            awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Basic/rc.lua $HOME/.config/awesome/rc.lua")
-            awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Basic/bar.lua $HOME/.config/awesome/bar.lua")
-            awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Basic/color.lua $HOME/.config/awesome/color.lua")
-            awful.spawn.with_shell("echo 'awesome.restart()' | awesome-client")
-           end
-        , 
-        {
-            description = "default",group = "Estilos"
-    })
-    ,
-    awful.key(
-        {modkey, modkey_alt}, "1",
-            function ()
-                awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Ruka-Sarashina/rc.lua $HOME/.config/awesome/rc.lua")
-                awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Ruka-Sarashina/bar.lua $HOME/.config/awesome/bar.lua")
-                awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Ruka-Sarashina/color.lua $HOME/.config/awesome/color.lua")
-                awful.spawn.with_shell("echo 'awesome.restart()' | awesome-client")
-            end
-        , 
-        {
-            description = "Ruka Sarashina",group = "Estilos"
-    })
-    ,
-    awful.key(
-        {modkey, modkey_alt}, "2",
-            function ()
-                awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Rick-And-Morty/rc.lua $HOME/.config/awesome/rc.lua")
-                awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Rick-And-Morty/bar.lua $HOME/.config/awesome/bar.lua")
-                awful.spawn.with_shell("cp $HOME/.config/awesome/styles/Rick-And-Morty/color.lua $HOME/.config/awesome/color.lua")
-                awful.spawn.with_shell("echo 'awesome.restart()' | awesome-client")
-            end
-        , 
-        {
-            description = "Rick and Morty",group = "Estilos"
-    })
-    )
-    -- Vincule todos los números clave a las etiquetas.
-    -- Tenga cuidado: usamos códigos clave para que funcione en cualquier diseño de teclado.
-    -- Esto debería estar en la fila superior de su teclado, generalmente del 1 al 9.
-    for i = 1, 9 do
-        globalkeys = gears.table.join(globalkeys, -- View tag only.
-        awful.key(
-            {modkey}, "#" .. i + 9, function()
-            local screen = awful.screen.focused()
-            local tag = screen.tags[i]
-            if tag then
-                tag:view_only()
-            end
-        end, {
-            description = "Ver escritorio -> #" .. i, group = "Escritorio"
-        }), -- Toggle tag display.
-        awful.key(
-            {modkey, modkey_control}, "#" .. i + 9, function()
-            local screen = awful.screen.focused()
-            local tag = screen.tags[i]
-            if tag then
-                awful.tag.viewtoggle(tag)
-            end
-        end, {
-            description = "Traer ventan del escritorio #" .. i, group = "Escritorio"
-        }), -- Move client to tag.
-        awful.key(
-            {modkey, modkey_shift}, "#" .. i + 9, function()
-            if client.focus then
-                local tag = client.focus.screen.tags[i]
-                if tag then
-                    client.focus:move_to_tag(tag)
-                end
-                local screen = awful.screen.focused()
-                local tag = screen.tags[i]
-                if tag then
-                    tag:view_only()
-                end
-            end
-        end, {
-            description = "Mover venatana enfocada al escritorio #" .. i, group = "Escritorio"
-        }))
-    end
-end
+            description = "Ajustar ventana a la mita de pantalla izquierda",
+            group = "Ventana"
+        }) ]]
