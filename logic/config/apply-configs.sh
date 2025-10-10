@@ -97,8 +97,39 @@ apply_configs() {
         fi
     fi
 
-    show_message "Configuraciones aplicadas correctamente"
+    # === Aplicar modo oscuro GTK ===
     echo ""
+    show_message "Aplicando configuración de modo oscuro (GTK3/GTK4)..."
+
+    mkdir -p "$HOME/.config/gtk-3.0" "$HOME/.config/gtk-4.0"
+
+    cat > "$HOME/.config/gtk-3.0/settings.ini" <<EOF
+[Settings]
+gtk-theme-name=Adwaita-dark
+gtk-icon-theme-name=Adwaita
+gtk-font-name=Noto Sans 10
+gtk-application-prefer-dark-theme=1
+EOF
+
+    cat > "$HOME/.config/gtk-4.0/settings.ini" <<EOF
+[Settings]
+gtk-theme-name=Adwaita-dark
+gtk-icon-theme-name=Adwaita
+gtk-font-name=Noto Sans 10
+gtk-application-prefer-dark-theme=1
+EOF
+
+    # === Aplicar con gsettings (si está disponible) ===
+    if command -v gsettings &>/dev/null; then
+        gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark' 2>/dev/null
+        gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' 2>/dev/null
+        show_message "Preferencia global de tema oscuro aplicada mediante gsettings"
+    else
+        show_warning "gsettings no está instalado; el modo oscuro se aplicó solo mediante archivos GTK"
+    fi
+
+    echo ""
+    show_message "Configuraciones aplicadas correctamente"
     show_warning "IMPORTANTE: Reinicia la sesión o el sistema para que los cambios tengan efecto"
 }
 

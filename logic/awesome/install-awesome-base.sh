@@ -66,9 +66,6 @@ install_awesome_base() {
     if [[ "${install_music,,}" == "s" ]] || [[ -z "$install_music" ]]; then
         show_message "Instalando reproductor de música..."
         sudo pacman -S --needed ${pkg_music} --noconfirm
-        # Solo ejecuta esto UNA VEZ
-        gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-        gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
     fi
     
     show_message "Instalación base de Awesome WM completada"

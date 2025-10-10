@@ -101,7 +101,7 @@ end, {
         description = "mostrar barra de menú",
         group = "launcher"
     }), awful.key({modkey, "Shift"}, "f", function()
-        awful.spawn.with_shell("thunar")
+        awful.spawn.with_shell("GTK_THEME=Adwaita:dark thunar")
     end, {
         description = "abrir gestor de archivos (Thunar)",
         group = "launcher"
