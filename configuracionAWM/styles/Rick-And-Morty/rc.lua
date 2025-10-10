@@ -315,6 +315,7 @@ end)
 -- }}}
 -- aplicaciones de ejecucion al inicio del entorno
 awful.util.spawn("picom")--tranparencia
+-- awful.spawn.with_shell("picom --daemon --backend xrender --vsync") -- esto es para graficas nvidia
 awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1 &")--lanzador de ventana para permisos
 awful.spawn.with_shell("mpd &")--cargar configuracion de reproductor
 awful.spawn.with_shell("nm-applet &")

@@ -281,6 +281,7 @@ end)
 
 -- Aplicaciones de inicio automático
 awful.util.spawn("picom")
+-- awful.spawn.with_shell("picom --daemon --backend xrender --vsync") -- esto es para graficas nvidia
 awful.spawn.with_shell("/usr/lib/polkit-kde-authentication-agent-1 &")
 awful.spawn.with_shell("mpd &")
 awful.spawn.with_shell("nm-applet &")
