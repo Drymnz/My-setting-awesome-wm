@@ -55,3 +55,20 @@ _set_prompt() {
 PROMPT_COMMAND=_set_prompt
 
 # ==== Fin del prompt ====
+
+
+# ==== Colores bonitos para 'ls' ====
+
+# Habilitar colores en ls
+alias ls='ls --color=auto --group-directories-first'
+
+# Alias más útiles
+alias ll='ls -lh --color=auto --group-directories-first'
+alias la='ls -A --color=auto --group-directories-first'
+alias l='ls -CF --color=auto --group-directories-first'
+
+# Personalización de colores LS_COLORS
+# Directorios en azul brillante, ejecutables en verde, enlaces en cian, etc.
+export LS_COLORS='di=1;34:ln=1;36:so=1;35:pi=33:ex=1;32:bd=1;33:cd=1;33:su=1;31:sg=1;31:tw=1;34:ow=1;34'
+
+# ==== Fin de colores de ls ====
