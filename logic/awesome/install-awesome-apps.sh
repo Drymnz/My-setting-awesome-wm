@@ -19,7 +19,7 @@ pkg_fonts_asian="wqy-zenhei"
 pkg_fonts_extra="ttf-croscore gnome-font-viewer"
 
 # Gestores de audio
-pkg_audio_manager="pavucontrol pulseaudio-alsa"
+pkg_audio_manager="pavucontrol pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber"
 
 install_awesome_apps() {
     clear
@@ -94,6 +94,7 @@ install_awesome_apps() {
     # Gestor de audio
     show_message "Instalando gestor de audio..."
     sudo pacman -S --needed ${pkg_audio_manager} --noconfirm
+    systemctl --user enable --now pipewire pipewire-pulse wireplumber
     
     show_message "Aplicaciones y temas instalados correctamente"
 }
