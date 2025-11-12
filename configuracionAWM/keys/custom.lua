@@ -21,12 +21,12 @@ function M.get_keys(modkey_alt, modkey_shift, awful)
     end, {
         description = "Anterior canción",
         group = "Music"
-    }), awful.key({modkey_alt, modkey_shift}, "-", function()
+    }), awful.key({modkey_alt, modkey_shift}, "i", function()
         awful.spawn.with_shell("mpc volume -3 &")
     end, {
         description = "Bajar volumen música",
         group = "Music"
-    }), awful.key({modkey_alt, modkey_shift}, "+", function()
+    }), awful.key({modkey_alt, modkey_shift}, "u", function()
         awful.spawn.with_shell("mpc volume +3 &")
     end, {
         description = "Subir volumen música",
@@ -55,8 +55,8 @@ CONTROL DE MÚSICA (Alt + Shift):
   • Alt + Shift + o         → Reproducir/Pausar
   • Alt + Shift + l         → Siguiente canción
   • Alt + Shift + k         → Canción anterior
-  • Alt + Shift + -         → Bajar volumen música (-3%)
-  • Alt + Shift + +         → Subir volumen música (+3%)
+  • Alt + Shift + i         → Bajar volumen música (-3%)
+  • Alt + Shift + j         → Subir volumen música (+3%)
 
   • modkey + Shift + s      → Captura de pantalla en área
 

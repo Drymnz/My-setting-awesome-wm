@@ -10,7 +10,7 @@ pkg_terminal="alacritty"
 pkg_polkit="polkit-kde-agent"
 pkg_dark="gtk3 gtk4"
 pkg_sddm="sddm"
-pkg_file_manager="thunar thunar-volman thunar-media-tags-plugin thunar-archive-plugin"
+pkg_file_manager="thunar thunar-volman thunar-media-tags-plugin thunar-archive-plugin tumbler"
 
 # Utilidades básicas
 pkg_screenshot="scrot xclip"
