@@ -134,6 +134,13 @@ function throw_bar(awful, set_wallpaper, tasklist_buttons, wibox, gears, taglist
                 info("temp_valor"),
                 info("temp_simbolo"),
                 info("separador"),
+
+                -- Bateria
+                info("label_batery"),
+                info("espacio"),
+                info("bat_system"),
+                info("cpu_simbolo"),
+                info("separador"),
                 
                 -- Power Menu
                 power,

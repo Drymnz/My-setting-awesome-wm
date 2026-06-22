@@ -17,6 +17,9 @@ local mostra_mem_user = awful.widget.watch('bash -c "free -m | grep Mem | awk \'
 -- Temperatura del sistema
 local temp_system = awful.widget.watch('bash -c "sensors | grep \'Package id 0\' | awk \'{print $4}\' | tr -d \'+°C\'"', time_update)
 
+-- Energia de la bateria
+local bat_system = awful.widget.watch('bash -c "cat /sys/class/power_supply/BAT1/capacity"', time_update)
+
 -- Función para crear widgets con estilo
 local function crear_widget_texto(text, color, font_size)
     return wibox.widget{
@@ -55,6 +58,8 @@ local label_ram_mb = crear_widget_texto("MB", "#FFFFFF", "9")
 local label_temp = crear_widget_texto("TEMP:", "#000000f6", "bold 10")
 local simbolo_celsius = crear_widget_texto("°C", "#FFFFFF", "9")
 
+local label_batery = crear_widget_texto("Batery:", "#27F5B0", "bold 10")
+
 -- Espacio en blanco pequeño
 local espacio_pequeno = wibox.widget{
     markup = " ",
@@ -81,6 +86,10 @@ local function informacion(user_args)
         return label_ram_mb
     elseif user_args == "temp_valor" then
         return temp_system
+    elseif user_args == "bat_system" then
+        return bat_system
+    elseif user_args == "label_batery" then
+        return label_batery
     elseif user_args == "temp_label" then
         return label_temp
     elseif user_args == "temp_simbolo" then
