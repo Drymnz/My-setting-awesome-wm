@@ -15,7 +15,7 @@ local mostra_cpu_user_ghz = awful.widget.watch('bash -c "cat /proc/cpuinfo | gre
 local mostra_mem_user = awful.widget.watch('bash -c "free -m | grep Mem | awk \'{print $3}\'"', time_update)
 
 -- Temperatura del sistema
-local temp_system = awful.widget.watch('bash -c "cat /sys/class/thermal/thermal_zone*/temp | head -n 1 | awk \'{print ($1 / 1000) + 10}\'"', time_update)
+local temp_system = awful.widget.watch('bash -c "sensors | grep \'Package id 0\' | awk \'{print $4}\' | tr -d \'+°C\'"', time_update)
 
 -- Función para crear widgets con estilo
 local function crear_widget_texto(text, color, font_size)
